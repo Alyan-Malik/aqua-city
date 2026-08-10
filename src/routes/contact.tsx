@@ -1,18 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { FiClock, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
+import { FiClock, FiMail, FiMapPin, FiPhone, FiUser } from "react-icons/fi";
 import { ContactForm } from "../components/ContactForm";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Aqua City — Free Consultation & Water Testing" },
+      { title: "Contact Aquacity Water Filters — Free Consultation & Water Testing" },
       {
         name: "description",
         content:
-          "Get in touch with the Aqua City team. Free consultation, on-site water testing and expert recommendations.",
+          "Get in touch with the Aquacity Water Filters team in Rawalpindi. Free consultation, on-site water testing, and expert recommendations.",
       },
-      { property: "og:title", content: "Contact Aqua City Water Filters" },
+      { property: "og:title", content: "Contact Aquacity Water Filters" },
       {
         property: "og:description",
         content: "Book a free consultation with our water experts.",
@@ -28,22 +28,32 @@ const INFO = [
   {
     icon: FiMapPin,
     title: "Visit Us",
-    lines: ["Main Boulevard, Blue Area,", "Islamabad, Pakistan"],
+    lines: ["Aquacity Water Filters", "K-25 Main Murree Road", "Rawalpindi, Pakistan"],
+  },
+  {
+    icon: FiUser,
+    title: "Contact Persons",
+    lines: [
+      "Iftikhar Ahmad",
+      "Fayaz Ahmad",
+      "Faizan Ahmad",
+    ],
   },
   {
     icon: FiPhone,
     title: "Call Us",
-    lines: ["+92 (51) 123-4567", "+92 (300) 987-6543"],
-  },
-  {
-    icon: FiMail,
-    title: "Email Us",
-    lines: ["hello@aquacity.example", "sales@aquacity.example"],
+    lines: [
+      "0300-5254953",
+      "0334-0507507",
+      "0321-5070017",
+      "0321-5326002",
+      "0334-0503503",
+    ],
   },
   {
     icon: FiClock,
     title: "Working Hours",
-    lines: ["Mon – Sat: 8:00 – 20:00", "Sun: 10:00 – 16:00"],
+    lines: ["Mon – Sat: 8:00 – 20:00", "Sun: Closed"],
   },
 ];
 
@@ -131,8 +141,8 @@ function Contact() {
             className="card-surface overflow-hidden rounded-2xl border border-border min-h-[400px] lg:min-h-full"
           >
             <iframe
-              title="Aqua City Islamabad Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106198.24357335688!2d72.98188168270502!3d33.68442018861966!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfbfd07891722f%3A0x6059515c3bdb02b6!2sIslamabad%2C%20Islamabad%20Capital%20Territory%2C%20Pakistan!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s"
+              title="Aquacity Water Filters Rawalpindi Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13284.739722307137!2d73.064506!3d33.613636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df948791244301%3A0xa19c43b9055eb699!2sMurree%20Rd%2C%20Rawalpindi%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s"
               className="h-full w-full min-h-[400px] border-0"
               allowFullScreen
               loading="lazy"

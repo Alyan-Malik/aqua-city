@@ -29,11 +29,11 @@ const CATEGORY_META: Record<
 > = {
   "Domestic Water Filters": {
     description: "Under-sink, countertop and whole-home purifiers for everyday drinking water.",
-    image: "https://pk-live-21.slatic.net/kf/Sb1b70fc354554ab09a7ecc53feb094aez.jpg",
+    image: "/images/13.jpeg",
   },
   "Commercial RO Systems": {
     description: "Reliable RO units for cafes, restaurants, hotels and offices.",
-    image: "https://cdn11.bigcommerce.com/s-1x0ys7yqwf/images/stencil/original/products/119/9136/RO-200-commercial-reverse-osmosis-ro-systems__59737.1626888899.jpg?c=1",
+    image: "/images/9.jpeg",
   },
   "Industrial Water Treatment": {
     description: "High-capacity RO, DM and UF plants engineered for industrial process water.",
@@ -41,7 +41,7 @@ const CATEGORY_META: Record<
   },
   "Water Softeners": {
     description: "Ion-exchange softeners that eliminate scale and protect your plumbing.",
-    image: "https://dadagroups.com/wp-content/uploads/2025/03/D-WS-P1-scaled.webp",
+    image: "/images/5.jpeg",
   },
   "RO Spare Parts": {
     description: "Genuine membranes, pumps, tanks and accessories for every system.",
@@ -82,46 +82,46 @@ const PROCESS = [
 
 const TESTIMONIALS: Testimonial[] = [
   {
-    name: "Sarah Mitchell",
+    name: "Ahmed Khan",
     role: "Homeowner",
     quote: "Aqua City transformed our home water. The install was clean and the water tastes incredible.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/120?img=47",
+    avatar: "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-avatar-profile-picture-male-icon.png",
   },
   {
-    name: "Rahul Verma",
+    name: "Iftikhar Malik",
     role: "Restaurant Owner",
     quote: "Our commercial RO has run flawlessly for two years. Support team is always a call away.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/120?img=15",
+    avatar: "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-avatar-profile-picture-male-icon.png",
   },
   {
-    name: "Emily Chen",
+    name: "Mariyum Ali",
     role: "Facility Manager",
     quote: "Rock-solid industrial plant. They handled everything from design to commissioning.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/120?img=32",
+    avatar: "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-avatar-profile-picture-female-icon.png",
   },
   {
-    name: "David O'Connor",
+    name: "Muhammad Mehmood",
     role: "Hotel GM",
     quote: "The softener eliminated our scale headaches overnight. Highly recommended.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/120?img=12",
+    avatar: "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-avatar-profile-picture-male-icon.png",
   },
   {
-    name: "Priya Sharma",
+    name: "Fatima Hussain",
     role: "Homeowner",
     quote: "Professional, punctual, and priced fairly. The mineral cartridge makes a real difference.",
     rating: 4,
-    avatar: "https://i.pravatar.cc/120?img=49",
+    avatar: "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-avatar-profile-picture-female-icon.png",
   },
   {
-    name: "Marcus Lee",
+    name: "Saad Rao",
     role: "Cafe Owner",
     quote: "Our espresso quality jumped after installing their commercial RO. Zero downtime since.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/120?img=8",
+    avatar: "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-avatar-profile-picture-male-icon.png",
   },
 ];
 
@@ -383,8 +383,8 @@ function Home() {
                 <Link to="/contact" className="btn-primary bg-white !text-brand hover:!bg-white/90">
                   Book a Free Consultation
                 </Link>
-                <a href="tel:+18001234567" className="btn-ghost-light">
-                  <FiPhone /> Call +1 (800) 123-4567
+                <a href="tel:+923005254953" className="btn-ghost-light">
+                  <FiPhone /> Call&nbsp; 03005254953
                 </a>
               </div>
             </div>

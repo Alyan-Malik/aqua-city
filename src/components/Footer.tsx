@@ -20,23 +20,25 @@ export function Footer() {
             Premium water filtration systems for homes, businesses and industries. Trusted for
             clean, safe and healthy water since 2008.
           </p>
-          <div className="mt-5 flex items-center gap-3">
-            {[
-              { icon: FaFacebookF, href: "#" },
-              { icon: FaInstagram, href: "#" },
-              { icon: FaLinkedinIn, href: "#" },
-              { icon: FaWhatsapp, href: "#" },
-            ].map(({ icon: Icon, href }, i) => (
-              <a
-                key={i}
-                href={href}
-                aria-label="social link"
-                className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-white hover:text-brand transition-colors"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
-          </div>
+         <div className="mt-5 flex items-center gap-3">
+  {[
+    { icon: FaFacebookF, href: "#", label: "Facebook" },
+    { icon: FaInstagram, href: "#", label: "Instagram" },
+    { icon: FaLinkedinIn, href: "#", label: "LinkedIn" },
+    { icon: FaWhatsapp, href: "https://wa.me/923005254953", label: "WhatsApp" },
+  ].map(({ icon: Icon, href, label }, i) => (
+    <a
+      key={i}
+      href={href}
+      target={href.startsWith("http") ? "_blank" : undefined}
+      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+      aria-label={label}
+      className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-white hover:text-brand transition-colors"
+    >
+      <Icon className="h-4 w-4" />
+    </a>
+  ))}
+</div>
         </div>
 
         <div>
@@ -85,15 +87,16 @@ export function Footer() {
           <ul className="mt-5 space-y-4 text-sm text-white/70">
             <li className="flex items-start gap-3">
               <FiMapPin className="mt-0.5 h-4 w-4 shrink-0" />
-              <span>128 Water Plaza, Downtown, Aqua City</span>
+              <span>AQUACITY WATER FILTERS
+K-25 MAIN MURREE ROAD RAWALPINDI</span>
             </li>
             <li className="flex items-start gap-3">
               <FiPhone className="mt-0.5 h-4 w-4 shrink-0" />
-              <span>+1 (800) 123-4567</span>
+              <span>03005254953</span>
             </li>
             <li className="flex items-start gap-3">
               <FiMail className="mt-0.5 h-4 w-4 shrink-0" />
-              <span>hello@aquacity.example</span>
+              <span>aquacity@gmail.com</span>
             </li>
           </ul>
         </div>

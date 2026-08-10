@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { FiMenu, FiX, FiPhone, FiChevronDown } from "react-icons/fi";
+import { FiMenu, FiX, FiPhone, FiChevronDown} from "react-icons/fi";
+import { BsWhatsapp } from "react-icons/bs";
 import { AnimatePresence, motion } from "framer-motion";
 
 // Categories definition
@@ -116,11 +117,16 @@ export function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <a href="tel:+18001234567" className="btn-primary text-sm">
-            <FiPhone className="h-4 w-4" />
-            Call Now
-          </a>
-        </div>
+  <a
+    href="https://wa.me/923005254953"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn-primary text-sm"
+  >
+    <BsWhatsapp className="h-4 w-4" />
+    WhatsApp
+  </a>
+</div>
 
         {/* Mobile Hamburger Toggle */}
         <button
