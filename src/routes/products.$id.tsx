@@ -5,6 +5,7 @@ import {
   FiCheckCircle,
   FiChevronRight,
   FiDownload,
+  FiLoader,
   FiMail,
   FiPhone,
 } from "react-icons/fi";
@@ -53,7 +54,51 @@ export const Route = createFileRoute("/products/$id")({
 function ProductDetail() {
   const { product } = Route.useLoaderData() as { product: Product };
   const [active, setActive] = useState(0);
+  const [downloading, setDownloading] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
   const related = relatedProducts(product.id, product.category, 3);
+
+  // Direct PDF Download Handler
+  const handleDownloadPDF = async () => {
+    setDownloading(true);
+    const pdfUrl = "/documents/Aqua_City_Installation_Guide.pdf";
+    const fileName = `${product.name.replace(/\s+/g, "_")}_Installation_Guide.pdf`;
+
+    try {
+      const response = await fetch(pdfUrl);
+      if (!response.ok) throw new Error("PDF file not found");
+
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+
+      setDownloaded(true);
+      setTimeout(() => setDownloaded(false), 3000);
+    } catch {
+      // Direct anchor link fallback if fetch is blocked
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.download = fileName;
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setDownloaded(true);
+      setTimeout(() => setDownloaded(false), 3000);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   return (
     <>
@@ -137,21 +182,38 @@ function ProductDetail() {
               </Link>
             </div>
 
-            <div className="mt-8 card-surface p-5 flex items-center gap-4 bg-brand-soft border-brand/20">
-              <div className="grid h-11 w-11 place-items-center rounded-full bg-white text-brand shrink-0">
-                <FiDownload />
+            {/* Direct PDF Download Card */}
+            <div className="mt-8 card-surface p-5 flex items-center gap-4 bg-brand-soft border-brand/20 rounded-2xl">
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-white text-brand shrink-0 shadow-sm">
+                <FiDownload className="text-lg" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold">Product Brochure</div>
+                <div className="text-sm font-semibold">Product Brochure & Manual</div>
                 <div className="text-xs text-muted-foreground">
-                  Download the datasheet & installation guide (PDF)
+                  Download datasheet & universal installation guide (PDF)
                 </div>
               </div>
               <button
-                onClick={(e) => e.preventDefault()}
-                className="text-sm font-semibold text-brand hover:underline"
+                onClick={handleDownloadPDF}
+                disabled={downloading}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-brand border border-brand/30 bg-white hover:bg-brand hover:text-white transition-all disabled:opacity-50"
               >
-                Download
+                {downloading ? (
+                  <>
+                    <FiLoader className="animate-spin" />
+                    <span>Downloading...</span>
+                  </>
+                ) : downloaded ? (
+                  <>
+                    <FiCheckCircle className="text-green-500" />
+                    <span>Downloaded</span>
+                  </>
+                ) : (
+                  <>
+                    <FiDownload />
+                    <span>Download PDF</span>
+                  </>
+                )}
               </button>
             </div>
           </motion.div>

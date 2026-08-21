@@ -118,7 +118,7 @@ export function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3">
   <a
-    href="https://wa.me/923005254953"
+    href="https://wa.me/03340503503"
     target="_blank"
     rel="noopener noreferrer"
     className="btn-primary text-sm"

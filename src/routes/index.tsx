@@ -20,8 +20,18 @@ import { TestimonialCard, type Testimonial } from "../components/TestimonialCard
 import { FAQAccordion } from "../components/FAQAccordion";
 import { PRODUCTS, CATEGORIES } from "../data/products";
 
-const HERO_IMG =
-  "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=1600&q=80";
+const HERO_BG_PATTERN =
+  "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1800&q=80";
+
+// Pre-calculate bubbles distributed across the height immediately on mount
+const BUBBLES = Array.from({ length: 24 }, (_, i) => ({
+  id: i,
+  size: Math.floor(Math.random() * 55) + 20, // 20px to 75px
+  left: `${Math.random() * 95}%`,
+  startY: `${Math.random() * 100}%`,
+  duration: Math.random() * 8 + 7,
+  blur: Math.random() > 0.65 ? "blur-sm" : "blur-none",
+}));
 
 const CATEGORY_META: Record<
   string,
@@ -45,7 +55,7 @@ const CATEGORY_META: Record<
   },
   "RO Spare Parts": {
     description: "Genuine membranes, pumps, tanks and accessories for every system.",
-    image: "https://www.hitechro.net/image/catalog/slider/spares_slider.png",
+    image: "https://images.jdmagicbox.com/quickquotes/images_main/domestic-water-purifier-spare-parts-2213130807-kjs1ekva.png",
   },
   "Filter Cartridges": {
     description: "Sediment, carbon, UF and mineral cartridges with standard fittings.",
@@ -157,73 +167,104 @@ function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden -mt-20 pt-20">
-        <div className="absolute inset-0 z-0">
-          <img
-            src={HERO_IMG}
-            alt="Clean pure water"
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-brand/95 via-brand/85 to-brand-hover/80" />
-        </div>
-
-        {/* Animated shapes */}
-        <motion.div
-          aria-hidden
-          className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl"
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+     <section className="relative overflow-hidden -mt-20 pt-20 bg-gradient-to-br from-brand via-brand/90 to-brand-hover min-h-[90vh] flex items-center">
+      {/* 1. Cinematic Background Texture (Macro Pure Water Surface) */}
+      <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
+        <img
+          src={HERO_BG_PATTERN}
+          alt="Pure clean water refraction pattern"
+          className="h-full w-full object-cover scale-105"
         />
-        <motion.div
-          aria-hidden
-          className="absolute bottom-0 -left-24 h-80 w-80 rounded-full bg-white/10 blur-3xl"
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-
-        <div className="container-x py-24 sm:py-32 lg:py-40 relative z-10">
+      </div>
+      
+      
+      {/* 3D Dynamic Animated Bubbles Overlay */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {BUBBLES.map((bubble) => (
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-3xl text-white"
+            key={bubble.id}
+            className={`absolute rounded-full border border-white/45 bg-gradient-to-tr from-white/35 via-white/10 to-transparent shadow-[inset_0_0_12px_rgba(255,255,255,0.7),0_8px_20px_rgba(0,0,0,0.12)] backdrop-blur-[2px] ${bubble.blur}`}
+            style={{
+              width: bubble.size,
+              height: bubble.size,
+              left: bubble.left,
+              top: bubble.startY, // Placed instantly on screen
+            }}
+            animate={{
+              // Float up from initial position to off-screen top, then loop from bottom to top endlessly
+              y: ["0vh", "-110vh"],
+              x: [0, Math.sin(bubble.id) * 35, 0],
+              scale: [1, 1.12, 0.92, 1],
+            }}
+            transition={{
+              duration: bubble.duration,
+              repeat: Infinity,
+              ease: "linear",
+            }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em]">
-              <FiDroplet /> Trusted water experts since 2008
-            </span>
-            <h1 className="mt-6 text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] text-balance">
-              Pure Water.<br />Healthier Living.
-            </h1>
-            <p className="mt-6 text-lg sm:text-xl text-white/85 max-w-2xl leading-relaxed">
-              Aqua City engineers, installs and maintains premium water filtration systems for
-              homes, businesses and industries — delivering safe, great-tasting water for over
-              a decade.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link to="/products" className="btn-primary bg-white !text-brand hover:!bg-white/90">
-                View Products
-              </Link>
-              <Link to="/contact" className="btn-ghost-light">
-                Contact Us
-              </Link>
-            </div>
-
-            <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl">
-              {[
-                ["15+", "Years Experience"],
-                ["25k+", "Installations"],
-                ["6", "Product Categories"],
-                ["24/7", "Support"],
-              ].map(([v, l]) => (
-                <div key={l}>
-                  <div className="text-3xl sm:text-4xl font-bold">{v}</div>
-                  <div className="mt-1 text-xs uppercase tracking-widest text-white/70">{l}</div>
-                </div>
-              ))}
-            </div>
+            {/* Glossy 3D Reflection Dot */}
+            <div className="absolute top-2 left-2 w-1.5 h-1.5 rounded-full bg-white/90 blur-[0.3px]" />
           </motion.div>
-        </div>
-      </section>
+        ))}
+      </div>
+
+      {/* Background Ambient Glows */}
+      <motion.div
+        aria-hidden
+        className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl pointer-events-none"
+        animate={{ y: [0, 25, 0], scale: [1, 1.05, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden
+        className="absolute bottom-0 -left-24 h-80 w-80 rounded-full bg-blue-300/20 blur-3xl pointer-events-none"
+        animate={{ y: [0, -25, 0], scale: [1, 1.1, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="container-x py-24 sm:py-32 lg:py-40 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="max-w-3xl text-white"
+        >
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] border border-white/20">
+            <FiDroplet /> Trusted water experts since 2008
+          </span>
+          <h1 className="mt-6 text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] text-balance">
+            Pure Water.<br />Healthier Living.
+          </h1>
+          <p className="mt-6 text-lg sm:text-xl text-white/85 max-w-2xl leading-relaxed">
+            Aqua City engineers, installs and maintains premium water filtration systems for
+            homes, businesses and industries — delivering safe, great-tasting water for over
+            a decade.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link to="/products" className="btn-primary bg-white !text-brand hover:!bg-white/90 shadow-lg">
+              View Products
+            </Link>
+            <Link to="/contact" className="btn-ghost-light border border-white/30 hover:bg-white/10">
+              Contact Us
+            </Link>
+          </div>
+
+          <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl">
+            {[
+              ["15+", "Years Experience"],
+              ["25k+", "Installations"],
+              ["6", "Product Categories"],
+              ["24/7", "Support"],
+            ].map(([v, l]) => (
+              <div key={l}>
+                <div className="text-3xl sm:text-4xl font-bold">{v}</div>
+                <div className="mt-1 text-xs uppercase tracking-widest text-white/70">{l}</div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
 
       {/* WHY CHOOSE */}
       <section className="py-24">
