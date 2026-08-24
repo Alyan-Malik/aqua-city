@@ -1,4 +1,4 @@
-import { n as PRODUCTS, t as CATEGORIES } from "./products-BGlbXMd-.js";
+import { n as PRODUCTS, t as CATEGORIES } from "./products-B9kQzlJc.js";
 import { n as SectionTitle, t as FeatureCard } from "./FeatureCard-D6UWeYNW.js";
 import { t as ProductCard } from "./ProductCard-DdCqCB5b.js";
 import { useState } from "react";

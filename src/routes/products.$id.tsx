@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FiCheckCircle,
   FiChevronRight,
@@ -8,6 +8,7 @@ import {
   FiLoader,
   FiMail,
   FiPhone,
+  FiX,
 } from "react-icons/fi";
 import { ProductCard } from "../components/ProductCard";
 import { getProduct, relatedProducts, type Product } from "../data/products";
@@ -54,9 +55,21 @@ export const Route = createFileRoute("/products/$id")({
 function ProductDetail() {
   const { product } = Route.useLoaderData() as { product: Product };
   const [active, setActive] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
   const related = relatedProducts(product.id, product.category, 3);
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLightboxOpen(false);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxOpen]);
 
   // Direct PDF Download Handler
   const handleDownloadPDF = async () => {
@@ -122,13 +135,18 @@ function ProductDetail() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <div className="card-surface overflow-hidden aspect-[4/3] bg-muted">
+            <button
+              type="button"
+              onClick={() => setLightboxOpen(true)}
+              aria-label={`Open ${product.name} image in full size`}
+              className="card-surface block w-full overflow-hidden aspect-[4/3] bg-muted cursor-zoom-in"
+            >
               <img
                 src={product.gallery[active]}
                 alt={product.name}
                 className="h-full w-full object-cover"
               />
-            </div>
+            </button>
             <div className="mt-4 grid grid-cols-4 gap-3">
               {product.gallery.map((g, i) => (
                 <button
@@ -143,6 +161,31 @@ function ProductDetail() {
               ))}
             </div>
           </motion.div>
+
+          {lightboxOpen && (
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${product.name} full-size image`}
+              onClick={() => setLightboxOpen(false)}
+              className="fixed inset-0 z-50 grid place-items-center bg-black/80 p-4 sm:p-8"
+            >
+              <button
+                type="button"
+                onClick={() => setLightboxOpen(false)}
+                aria-label="Close full-size image"
+                className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/90 text-foreground shadow-lg transition hover:bg-white"
+              >
+                <FiX className="h-5 w-5" />
+              </button>
+              <img
+                src={product.gallery[active]}
+                alt={product.name}
+                onClick={(event) => event.stopPropagation()}
+                className="max-h-[90vh] max-w-full object-contain"
+              />
+            </div>
+          )}
 
           {/* Info */}
           <motion.div

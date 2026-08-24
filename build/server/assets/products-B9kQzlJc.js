@@ -13,9 +13,18 @@ var HARDWARE_IMG = {
 	countertopUnit: "/images/8.jpeg",
 	wholeHouseHousing: "/images/7.jpeg",
 	wholeHouseHousing2: "/images/13.jpeg",
+	cannon3StageWaterFiltration: "/images/18.jpeg",
+	nonElectricMiniTableTop: "/images/23.jpeg",
+	aquaFine2StageJumbo: "/images/26.jpeg",
+	aquaCityPlusGravityWaterFilter: "/images/27.jpeg",
 	commercialRo500: "/images/4.jpeg",
 	commercialRoSkid1500: "/images/9.jpeg",
 	commercialRoSkid3000: "/images/10.jpeg",
+	commercialReverseOsmosis1000LPH: "/images/16.jpeg",
+	commercialSkidMounted: "/images/17.jpeg",
+	commercial400GPDto800GPDBracketMounted: "/images/21.jpeg",
+	commercialReverseOsmosisRO: "/images/22.jpeg",
+	commercialWaterDispenserWith3StageJumbo: "/images/25.jpeg",
 	dmDeionizerPlant: "/images/6.jpeg",
 	ultrafiltrationPlant: "/images/11.jpeg",
 	residentialSoftenerTank: "/images/1.jpeg",
@@ -27,6 +36,9 @@ var HARDWARE_IMG = {
 	boosterPumpMotor: "https://sc04.alicdn.com/kf/Hf6c39fc3ac0f498087418907596c4bf3T.jpg",
 	pressureTank: "https://axtronpakistan.com/wp-content/uploads/2026/04/IMG_0417-edited-7.webp",
 	digitalTdsTester: "https://electrobes.com/wp-content/uploads/2025/08/digital-water-ph-tester-0-14-measuring-value-0-01-high-accuracy-ph-meter-at-best-price-in-pakistan.jpg?v=1758713271",
+	digitenWaterPressureGaugeMeter: "/images/19.jpeg",
+	dadaDrinkingWaterPump: "/images/20.jpeg",
+	ezWaterTechnologyIon: "/images/24.jpeg",
 	ppSedimentFilter: "https://www.simpurelife.com/cdn/shop/files/1025ppwaterfilter.jpg?v=1716863005",
 	carbonBlockCTO: "https://pearlwater.in/assets/siteimages/product/1671098887_5263db7bc94fe9d10cfd.jpg",
 	ufInlineModule: "https://5.imimg.com/data5/ANDROID/Default/2024/6/425636147/RT/IS/GP/125417554/product-jpeg.jpg",
@@ -249,6 +261,162 @@ var PRODUCTS = [
 		]
 	},
 	{
+		id: "cannon-3-stage-water-filtration",
+		name: "Cannon 3-Stage Water Filtration System (10-Inch Variant)",
+		category: "Domestic Water Filters",
+		model: "CA-WH-BB23",
+		shortDescription: "Point-of-entry big-blue filtration for every tap in the house.",
+		overview: "Protects plumbing and appliances by removing sediment, rust and chlorine at the main water line.",
+		image: HARDWARE_IMG.cannon3StageWaterFiltration,
+		gallery: [HARDWARE_IMG.cannon3StageWaterFiltration],
+		features: [
+			"Twin big-blue housings",
+			"Sediment + carbon combo",
+			"Bypass valves included",
+			"Pressure gauges"
+		],
+		specs: genSpecs([{
+			label: "Flow Rate",
+			value: "15 GPM"
+		}, {
+			label: "Housing",
+			value: "20\" × 4.5\""
+		}]),
+		applications: genApps([
+			"Villas",
+			"Duplexes",
+			"Small buildings",
+			"Farmhouses"
+		]),
+		benefits: genBenefits([
+			"Protects boilers, washers & fixtures",
+			"Cleaner shower & laundry water",
+			"Extends appliance life"
+		]),
+		keywords: [
+			"whole house",
+			"big blue",
+			"point of entry"
+		]
+	},
+	{
+		id: "non-electric-mini-table-top-water-dispenser",
+		name: "Target Non-Electric Mini Table-Top Water Dispenser",
+		category: "Domestic Water Filters",
+		model: "NE-WH-BB33",
+		shortDescription: "Point-of-entry big-blue filtration for every tap in the house.",
+		overview: "Protects plumbing and appliances by removing sediment, rust and chlorine at the main water line.",
+		image: HARDWARE_IMG.nonElectricMiniTableTop,
+		gallery: [HARDWARE_IMG.nonElectricMiniTableTop],
+		features: [
+			"Twin big-blue housings",
+			"Sediment + carbon combo",
+			"Bypass valves included",
+			"Pressure gauges"
+		],
+		specs: genSpecs([{
+			label: "Flow Rate",
+			value: "15 GPM"
+		}, {
+			label: "Housing",
+			value: "20\" × 4.5\""
+		}]),
+		applications: genApps([
+			"Villas",
+			"Duplexes",
+			"Small buildings",
+			"Farmhouses"
+		]),
+		benefits: genBenefits([
+			"Protects boilers, washers & fixtures",
+			"Cleaner shower & laundry water",
+			"Extends appliance life"
+		]),
+		keywords: [
+			"whole house",
+			"big blue",
+			"point of entry"
+		]
+	},
+	{
+		id: "aqua-fine-2-stage-jumbo-water-filtration-system",
+		name: "Aqua Fine 2-Stage Jumbo Water Filtration System",
+		category: "Domestic Water Filters",
+		model: "AF-WH-BB02",
+		shortDescription: "Point-of-entry big-blue filtration for every tap in the house.",
+		overview: "Protects plumbing and appliances by removing sediment, rust and chlorine at the main water line.",
+		image: HARDWARE_IMG.aquaFine2StageJumbo,
+		gallery: [HARDWARE_IMG.aquaFine2StageJumbo],
+		features: [
+			"Twin big-blue housings",
+			"Sediment + carbon combo",
+			"Bypass valves included",
+			"Pressure gauges"
+		],
+		specs: genSpecs([{
+			label: "Flow Rate",
+			value: "15 GPM"
+		}, {
+			label: "Housing",
+			value: "20\" × 4.5\""
+		}]),
+		applications: genApps([
+			"Villas",
+			"Duplexes",
+			"Small buildings",
+			"Farmhouses"
+		]),
+		benefits: genBenefits([
+			"Protects boilers, washers & fixtures",
+			"Cleaner shower & laundry water",
+			"Extends appliance life"
+		]),
+		keywords: [
+			"whole house",
+			"big blue",
+			"point of entry"
+		]
+	},
+	{
+		id: "aqua-city-plus-gravity-water-filter",
+		name: "Aqua City Plus Gravity Water Filter",
+		category: "Domestic Water Filters",
+		model: "AC-GW-BB05",
+		shortDescription: "Point-of-entry big-blue filtration for every tap in the house.",
+		overview: "Protects plumbing and appliances by removing sediment, rust and chlorine at the main water line.",
+		image: HARDWARE_IMG.aquaCityPlusGravityWaterFilter,
+		gallery: [HARDWARE_IMG.aquaCityPlusGravityWaterFilter],
+		features: [
+			"Twin big-blue housings",
+			"Sediment + carbon combo",
+			"Bypass valves included",
+			"Pressure gauges"
+		],
+		specs: genSpecs([{
+			label: "Flow Rate",
+			value: "15 GPM"
+		}, {
+			label: "Housing",
+			value: "20\" × 4.5\""
+		}]),
+		applications: genApps([
+			"Villas",
+			"Duplexes",
+			"Small buildings",
+			"Farmhouses"
+		]),
+		benefits: genBenefits([
+			"Protects boilers, washers & fixtures",
+			"Cleaner shower & laundry water",
+			"Extends appliance life"
+		]),
+		keywords: [
+			"whole house",
+			"big blue",
+			"point of entry"
+		]
+	},
+	{
 		id: "aqua-com-500",
 		name: "Commercial whole-house water filtration and softening system",
 		category: "Commercial RO Systems",
@@ -333,6 +501,176 @@ var PRODUCTS = [
 		overview: "3000 GPD output with clean-in-place system for demanding commercial installations.",
 		image: HARDWARE_IMG.commercialRoSkid3000,
 		gallery: [HARDWARE_IMG.commercialRoSkid3000],
+		features: [
+			"3000 GPD",
+			"Automated CIP cycle",
+			"TDS & pressure monitoring",
+			"Remote alarm output"
+		],
+		specs: genSpecs([{
+			label: "Production",
+			value: "3000 GPD"
+		}, {
+			label: "Recovery",
+			value: "55%"
+		}]),
+		applications: genApps([
+			"Large hotels",
+			"Manufacturing pantries",
+			"Bottling lines"
+		]),
+		benefits: genBenefits(),
+		keywords: [
+			"commercial",
+			"3000",
+			"cip"
+		]
+	},
+	{
+		id: "aqua-com-1000-LPH",
+		name: "1000 LPH Commercial Reverse Osmosis (RO) Water Plant",
+		category: "Commercial RO Systems",
+		model: "ZC-CR-1000",
+		shortDescription: "High-capacity commercial plant with automated CIP.",
+		overview: "3000 GPD output with clean-in-place system for demanding commercial installations.",
+		image: HARDWARE_IMG.commercialReverseOsmosis1000LPH,
+		gallery: [HARDWARE_IMG.commercialReverseOsmosis1000LPH],
+		features: [
+			"3000 GPD",
+			"Automated CIP cycle",
+			"TDS & pressure monitoring",
+			"Remote alarm output"
+		],
+		specs: genSpecs([{
+			label: "Production",
+			value: "3000 GPD"
+		}, {
+			label: "Recovery",
+			value: "55%"
+		}]),
+		applications: genApps([
+			"Large hotels",
+			"Manufacturing pantries",
+			"Bottling lines"
+		]),
+		benefits: genBenefits(),
+		keywords: [
+			"commercial",
+			"3000",
+			"cip"
+		]
+	},
+	{
+		id: "aqua-com-skid-mounted",
+		name: "Light Commercial Skid-Mounted Reverse Osmosis (RO) Plant",
+		category: "Commercial RO Systems",
+		model: "ZX-CR-3000",
+		shortDescription: "High-capacity commercial plant with automated CIP.",
+		overview: "3000 GPD output with clean-in-place system for demanding commercial installations.",
+		image: HARDWARE_IMG.commercialSkidMounted,
+		gallery: [HARDWARE_IMG.commercialSkidMounted],
+		features: [
+			"3000 GPD",
+			"Automated CIP cycle",
+			"TDS & pressure monitoring",
+			"Remote alarm output"
+		],
+		specs: genSpecs([{
+			label: "Production",
+			value: "3000 GPD"
+		}, {
+			label: "Recovery",
+			value: "55%"
+		}]),
+		applications: genApps([
+			"Large hotels",
+			"Manufacturing pantries",
+			"Bottling lines"
+		]),
+		benefits: genBenefits(),
+		keywords: [
+			"commercial",
+			"3000",
+			"cip"
+		]
+	},
+	{
+		id: "aqua-com-bracket-mounted",
+		name: "400 GPD to 800 GPD Bracket-Mounted Light Commercial RO System",
+		category: "Commercial RO Systems",
+		model: "BM-LR-800",
+		shortDescription: "High-capacity commercial plant with automated CIP.",
+		overview: "3000 GPD output with clean-in-place system for demanding commercial installations.",
+		image: HARDWARE_IMG.commercial400GPDto800GPDBracketMounted,
+		gallery: [HARDWARE_IMG.commercial400GPDto800GPDBracketMounted],
+		features: [
+			"3000 GPD",
+			"Automated CIP cycle",
+			"TDS & pressure monitoring",
+			"Remote alarm output"
+		],
+		specs: genSpecs([{
+			label: "Production",
+			value: "3000 GPD"
+		}, {
+			label: "Recovery",
+			value: "55%"
+		}]),
+		applications: genApps([
+			"Large hotels",
+			"Manufacturing pantries",
+			"Bottling lines"
+		]),
+		benefits: genBenefits(),
+		keywords: [
+			"commercial",
+			"3000",
+			"cip"
+		]
+	},
+	{
+		id: "aqua-com-reverse-osmosis",
+		name: "Commercial Reverse Osmosis (RO) Water Plant / Water Filtration System",
+		category: "Commercial RO Systems",
+		model: "BM-LR-800",
+		shortDescription: "High-capacity commercial plant with automated CIP.",
+		overview: "3000 GPD output with clean-in-place system for demanding commercial installations.",
+		image: HARDWARE_IMG.commercialReverseOsmosisRO,
+		gallery: [HARDWARE_IMG.commercialReverseOsmosisRO],
+		features: [
+			"3000 GPD",
+			"Automated CIP cycle",
+			"TDS & pressure monitoring",
+			"Remote alarm output"
+		],
+		specs: genSpecs([{
+			label: "Production",
+			value: "3000 GPD"
+		}, {
+			label: "Recovery",
+			value: "55%"
+		}]),
+		applications: genApps([
+			"Large hotels",
+			"Manufacturing pantries",
+			"Bottling lines"
+		]),
+		benefits: genBenefits(),
+		keywords: [
+			"commercial",
+			"3000",
+			"cip"
+		]
+	},
+	{
+		id: "aqua-com-3-stage-jumbo-filtration",
+		name: "Aqua City Plus Commercial Water Dispenser with 3-Stage Jumbo Filtration System",
+		category: "Commercial RO Systems",
+		model: "JB-LR-800",
+		shortDescription: "High-capacity commercial plant with automated CIP.",
+		overview: "3000 GPD output with clean-in-place system for demanding commercial installations.",
+		image: HARDWARE_IMG.commercialWaterDispenserWith3StageJumbo,
+		gallery: [HARDWARE_IMG.commercialWaterDispenserWith3StageJumbo],
 		features: [
 			"3000 GPD",
 			"Automated CIP cycle",
@@ -720,6 +1058,99 @@ var PRODUCTS = [
 		overview: "Pocket-sized TDS + pH meter with auto temperature compensation.",
 		image: HARDWARE_IMG.digitalTdsTester,
 		gallery: [HARDWARE_IMG.digitalTdsTester],
+		features: [
+			"TDS 0 – 9999 ppm",
+			"pH 0 – 14",
+			"Auto temp compensation",
+			"LCD display"
+		],
+		specs: genSpecs([{
+			label: "Accuracy",
+			value: "±2%"
+		}]),
+		applications: genApps([
+			"Field service",
+			"Homeowners",
+			"Installers"
+		]),
+		benefits: genBenefits(),
+		keywords: [
+			"tds",
+			"meter",
+			"spare"
+		]
+	},
+	{
+		id: "aqua-prs-meter",
+		name: "DIGITEN Water Pressure Gauge Meter ",
+		category: "RO Spare Parts",
+		model: "PS-TDS-01",
+		shortDescription: "Handheld water quality tester for installers and homeowners.",
+		overview: "Pocket-sized TDS + pH meter with auto temperature compensation.",
+		image: HARDWARE_IMG.digitenWaterPressureGaugeMeter,
+		gallery: [HARDWARE_IMG.digitenWaterPressureGaugeMeter],
+		features: [
+			"TDS 0 – 9999 ppm",
+			"pH 0 – 14",
+			"Auto temp compensation",
+			"LCD display"
+		],
+		specs: genSpecs([{
+			label: "Accuracy",
+			value: "±2%"
+		}]),
+		applications: genApps([
+			"Field service",
+			"Homeowners",
+			"Installers"
+		]),
+		benefits: genBenefits(),
+		keywords: [
+			"tds",
+			"meter",
+			"spare"
+		]
+	},
+	{
+		id: "aqua-wtr-pump",
+		name: "DADA Drinking Water Pump",
+		category: "RO Spare Parts",
+		model: "PP-TDS-03",
+		shortDescription: "Handheld water quality tester for installers and homeowners.",
+		overview: "Pocket-sized TDS + pH meter with auto temperature compensation.",
+		image: HARDWARE_IMG.dadaDrinkingWaterPump,
+		gallery: [HARDWARE_IMG.dadaDrinkingWaterPump],
+		features: [
+			"TDS 0 – 9999 ppm",
+			"pH 0 – 14",
+			"Auto temp compensation",
+			"LCD display"
+		],
+		specs: genSpecs([{
+			label: "Accuracy",
+			value: "±2%"
+		}]),
+		applications: genApps([
+			"Field service",
+			"Homeowners",
+			"Installers"
+		]),
+		benefits: genBenefits(),
+		keywords: [
+			"tds",
+			"meter",
+			"spare"
+		]
+	},
+	{
+		id: "aqua-ez-ion",
+		name: "EZ Water Technology Ion Exchange Resin",
+		category: "RO Spare Parts",
+		model: "EZ-ION-03",
+		shortDescription: "Handheld water quality tester for installers and homeowners.",
+		overview: "Pocket-sized TDS + pH meter with auto temperature compensation.",
+		image: HARDWARE_IMG.ezWaterTechnologyIon,
+		gallery: [HARDWARE_IMG.ezWaterTechnologyIon],
 		features: [
 			"TDS 0 – 9999 ppm",
 			"pH 0 – 14",

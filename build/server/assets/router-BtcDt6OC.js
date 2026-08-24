@@ -1,6 +1,6 @@
-import { n as PRODUCTS, t as CATEGORIES } from "./products-BGlbXMd-.js";
-import { t as Route$5 } from "./products.index-Cjtqz5xi.js";
-import { t as Route$6 } from "./products._id-BtR3we73.js";
+import { n as PRODUCTS, t as CATEGORIES } from "./products-B9kQzlJc.js";
+import { t as Route$5 } from "./products.index-RzWNOItU.js";
+import { t as Route$6 } from "./products._id-D9beHLN3.js";
 import { useEffect, useState } from "react";
 import { HeadContent, Link, Outlet, Scripts, createFileRoute, createRootRouteWithContext, createRouter, lazyRouteComponent, useRouter } from "@tanstack/react-router";
 import { jsx, jsxs } from "react/jsx-runtime";
@@ -10,7 +10,7 @@ import { BsWhatsapp } from "react-icons/bs";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 //#region src/styles.css?url
-var styles_default = "./assets/styles-BPnteb8x.css";
+var styles_default = "./assets/styles-Cyy02-_4.css";
 //#endregion
 //#region src/lib/lovable-error-reporting.ts
 function reportLovableError(error, context = {}) {
@@ -243,9 +243,11 @@ function Navbar() {
 						children: "Contact"
 					}),
 					/* @__PURE__ */ jsxs("a", {
-						href: "tel:+18001234567",
-						className: "btn-primary mt-2 text-sm",
-						children: [/* @__PURE__ */ jsx(FiPhone, { className: "h-4 w-4" }), "Call Now"]
+						href: "https://wa.me/03340503503",
+						target: "_blank",
+						rel: "noopener noreferrer",
+						className: "btn-primary text-sm",
+						children: [/* @__PURE__ */ jsx(BsWhatsapp, { className: "h-4 w-4" }), "WhatsApp"]
 					})
 				]
 			})
@@ -557,7 +559,7 @@ function RootComponent() {
 }
 //#endregion
 //#region src/routes/index.tsx
-var $$splitComponentImporter$2 = () => import("./routes-DEN5JvXF.js");
+var $$splitComponentImporter$2 = () => import("./routes-DbQkqe4b.js");
 var Route$3 = createFileRoute("/")({
 	head: () => ({ meta: [
 		{ title: "Aqua City Water Filters — Pure Water. Healthier Living." },

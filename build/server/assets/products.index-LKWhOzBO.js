@@ -1,5 +1,5 @@
-import { n as PRODUCTS, t as CATEGORIES } from "./products-BGlbXMd-.js";
-import { t as Route } from "./products.index-Cjtqz5xi.js";
+import { n as PRODUCTS, t as CATEGORIES } from "./products-B9kQzlJc.js";
+import { t as Route } from "./products.index-RzWNOItU.js";
 import { t as ProductCard } from "./ProductCard-DdCqCB5b.js";
 import { useMemo, useState } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";

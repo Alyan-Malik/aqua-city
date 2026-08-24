@@ -229,10 +229,17 @@ export function Navbar() {
                 Contact
               </Link>
 
-              <a href="tel:+18001234567" className="btn-primary mt-2 text-sm">
-                <FiPhone className="h-4 w-4" />
-                Call Now
-              </a>
+               
+  <a
+    href="https://wa.me/03340503503"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn-primary text-sm"
+  >
+    <BsWhatsapp className="h-4 w-4" />
+    WhatsApp
+  </a>
+
             </div>
           </motion.div>
         )}
