@@ -2,7 +2,7 @@ import { r as getProduct } from "./products-B9kQzlJc.js";
 import { createFileRoute, lazyRouteComponent, notFound } from "@tanstack/react-router";
 //#region src/routes/products.$id.tsx
 var $$splitNotFoundComponentImporter = () => import("./products._id-Dn7nZpCD.js");
-var $$splitComponentImporter = () => import("./products._id-Bh3yDP-d.js");
+var $$splitComponentImporter = () => import("./products._id-DeY_PUXp.js");
 var Route = createFileRoute("/products/$id")({
 	loader: ({ params }) => {
 		const product = getProduct(params.id);

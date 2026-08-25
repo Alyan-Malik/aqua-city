@@ -1,7 +1,7 @@
 import { createFileRoute, lazyRouteComponent } from "@tanstack/react-router";
 import { z } from "zod";
 //#region src/routes/products.index.tsx
-var $$splitComponentImporter = () => import("./products.index-LKWhOzBO.js");
+var $$splitComponentImporter = () => import("./products.index-DxVkG-_Q.js");
 var searchSchema = z.object({ category: z.string().optional() });
 var Route = createFileRoute("/products/")({
 	validateSearch: searchSchema,

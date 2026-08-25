@@ -24,11 +24,11 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </Link>
-      <div className="flex flex-1 flex-col p-6">
-        <div className="text-xs font-semibold uppercase tracking-[0.16em] text-brand">
+      <div className="flex flex-1 flex-col p-4">
+        <div className="text-[10px] font-semibold uppercase tracking-wider text-brand">
           {product.category}
         </div>
-        <h3 className="mt-2 text-lg font-semibold leading-snug">
+        <h3 className="mt-1 text-base font-semibold leading-tight">
           <Link
             to="/products/$id"
             params={{ id: product.id }}
@@ -37,15 +37,15 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
             {product.name}
           </Link>
         </h3>
-        <p className="mt-1 text-xs text-muted-foreground">Model: {product.model}</p>
-        <p className="mt-3 text-sm text-muted-foreground line-clamp-2">
+        <p className="mt-1 text-[11px] text-muted-foreground">Model: {product.model}</p>
+        <p className="mt-2 text-xs text-muted-foreground line-clamp-2">
           {product.shortDescription}
         </p>
-        <div className="mt-5 pt-5 border-t border-border">
+        <div className="mt-4 pt-3 border-t border-border">
           <Link
             to="/products/$id"
             params={{ id: product.id }}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-brand group/link"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand group/link"
           >
             View Details
             <FiArrowRight className="transition-transform group-hover/link:translate-x-1" />

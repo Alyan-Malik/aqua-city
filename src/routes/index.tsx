@@ -425,7 +425,7 @@ function Home() {
                   Book a Free Consultation
                 </Link>
                 <a href="tel:+923005254953" className="btn-ghost-light">
-                  <FiPhone /> Call&nbsp; 03005254953
+                  <FiPhone /> Call&nbsp; 03340503503
                 </a>
               </div>
             </div>

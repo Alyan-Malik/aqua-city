@@ -1,6 +1,6 @@
 import { i as relatedProducts } from "./products-B9kQzlJc.js";
-import { t as Route } from "./products._id-D9beHLN3.js";
-import { t as ProductCard } from "./ProductCard-DdCqCB5b.js";
+import { t as Route } from "./products._id-C2SlhUgm.js";
+import { t as ProductCard } from "./ProductCard-lOpxqj_U.js";
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
@@ -192,14 +192,26 @@ function ProductDetail() {
 								})]
 							}),
 							/* @__PURE__ */ jsxs("div", {
-								className: "mt-8 card-surface p-5 flex items-center gap-4 bg-brand-soft border-brand/20 rounded-2xl",
+								className: "mt-8 card-surface p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-4 bg-brand-soft border-brand/20 rounded-2xl",
 								children: [
-									/* @__PURE__ */ jsx("div", {
-										className: "grid h-11 w-11 place-items-center rounded-full bg-white text-brand shrink-0 shadow-sm",
-										children: /* @__PURE__ */ jsx(FiDownload, { className: "text-lg" })
+									/* @__PURE__ */ jsxs("div", {
+										className: "flex items-center gap-3 sm:gap-4 w-full sm:w-auto",
+										children: [/* @__PURE__ */ jsx("div", {
+											className: "grid h-10 w-10 sm:h-11 sm:w-11 place-items-center rounded-full bg-white text-brand shrink-0 shadow-sm",
+											children: /* @__PURE__ */ jsx(FiDownload, { className: "text-base sm:text-lg" })
+										}), /* @__PURE__ */ jsxs("div", {
+											className: "flex-1 min-w-0 sm:hidden",
+											children: [/* @__PURE__ */ jsx("div", {
+												className: "text-sm font-semibold leading-snug",
+												children: "Product Brochure & Manual"
+											}), /* @__PURE__ */ jsx("div", {
+												className: "text-xs text-muted-foreground mt-0.5",
+												children: "Download datasheet & universal installation guide (PDF)"
+											})]
+										})]
 									}),
 									/* @__PURE__ */ jsxs("div", {
-										className: "flex-1 min-w-0",
+										className: "hidden sm:block flex-1 min-w-0",
 										children: [/* @__PURE__ */ jsx("div", {
 											className: "text-sm font-semibold",
 											children: "Product Brochure & Manual"
@@ -211,7 +223,7 @@ function ProductDetail() {
 									/* @__PURE__ */ jsx("button", {
 										onClick: handleDownloadPDF,
 										disabled: downloading,
-										className: "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-brand border border-brand/30 bg-white hover:bg-brand hover:text-white transition-all disabled:opacity-50",
+										className: "w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold text-brand border border-brand/30 bg-white hover:bg-brand hover:text-white transition-all disabled:opacity-50",
 										children: downloading ? /* @__PURE__ */ jsxs(Fragment, { children: [/* @__PURE__ */ jsx(FiLoader, { className: "animate-spin" }), /* @__PURE__ */ jsx("span", { children: "Downloading..." })] }) : downloaded ? /* @__PURE__ */ jsxs(Fragment, { children: [/* @__PURE__ */ jsx(FiCheckCircle, { className: "text-green-500" }), /* @__PURE__ */ jsx("span", { children: "Downloaded" })] }) : /* @__PURE__ */ jsxs(Fragment, { children: [/* @__PURE__ */ jsx(FiDownload, {}), /* @__PURE__ */ jsx("span", { children: "Download PDF" })] })
 									})
 								]

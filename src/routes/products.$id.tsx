@@ -225,40 +225,50 @@ function ProductDetail() {
               </Link>
             </div>
 
-            {/* Direct PDF Download Card */}
-            <div className="mt-8 card-surface p-5 flex items-center gap-4 bg-brand-soft border-brand/20 rounded-2xl">
-              <div className="grid h-11 w-11 place-items-center rounded-full bg-white text-brand shrink-0 shadow-sm">
-                <FiDownload className="text-lg" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold">Product Brochure & Manual</div>
-                <div className="text-xs text-muted-foreground">
-                  Download datasheet & universal installation guide (PDF)
-                </div>
-              </div>
-              <button
-                onClick={handleDownloadPDF}
-                disabled={downloading}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-brand border border-brand/30 bg-white hover:bg-brand hover:text-white transition-all disabled:opacity-50"
-              >
-                {downloading ? (
-                  <>
-                    <FiLoader className="animate-spin" />
-                    <span>Downloading...</span>
-                  </>
-                ) : downloaded ? (
-                  <>
-                    <FiCheckCircle className="text-green-500" />
-                    <span>Downloaded</span>
-                  </>
-                ) : (
-                  <>
-                    <FiDownload />
-                    <span>Download PDF</span>
-                  </>
-                )}
-              </button>
-            </div>
+           {/* Direct PDF Download Card */}
+<div className="mt-8 card-surface p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-4 bg-brand-soft border-brand/20 rounded-2xl">
+  <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+    <div className="grid h-10 w-10 sm:h-11 sm:w-11 place-items-center rounded-full bg-white text-brand shrink-0 shadow-sm">
+      <FiDownload className="text-base sm:text-lg" />
+    </div>
+    <div className="flex-1 min-w-0 sm:hidden">
+      <div className="text-sm font-semibold leading-snug">Product Brochure & Manual</div>
+      <div className="text-xs text-muted-foreground mt-0.5">
+        Download datasheet & universal installation guide (PDF)
+      </div>
+    </div>
+  </div>
+
+  <div className="hidden sm:block flex-1 min-w-0">
+    <div className="text-sm font-semibold">Product Brochure & Manual</div>
+    <div className="text-xs text-muted-foreground">
+      Download datasheet & universal installation guide (PDF)
+    </div>
+  </div>
+
+  <button
+    onClick={handleDownloadPDF}
+    disabled={downloading}
+    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold text-brand border border-brand/30 bg-white hover:bg-brand hover:text-white transition-all disabled:opacity-50"
+  >
+    {downloading ? (
+      <>
+        <FiLoader className="animate-spin" />
+        <span>Downloading...</span>
+      </>
+    ) : downloaded ? (
+      <>
+        <FiCheckCircle className="text-green-500" />
+        <span>Downloaded</span>
+      </>
+    ) : (
+      <>
+        <FiDownload />
+        <span>Download PDF</span>
+      </>
+    )}
+  </button>
+</div>
           </motion.div>
         </div>
       </section>

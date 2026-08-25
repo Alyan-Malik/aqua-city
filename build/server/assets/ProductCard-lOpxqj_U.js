@@ -33,14 +33,14 @@ function ProductCard({ product, index = 0 }) {
 				className: "h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 			})
 		}), /* @__PURE__ */ jsxs("div", {
-			className: "flex flex-1 flex-col p-6",
+			className: "flex flex-1 flex-col p-4",
 			children: [
 				/* @__PURE__ */ jsx("div", {
-					className: "text-xs font-semibold uppercase tracking-[0.16em] text-brand",
+					className: "text-[10px] font-semibold uppercase tracking-wider text-brand",
 					children: product.category
 				}),
 				/* @__PURE__ */ jsx("h3", {
-					className: "mt-2 text-lg font-semibold leading-snug",
+					className: "mt-1 text-base font-semibold leading-tight",
 					children: /* @__PURE__ */ jsx(Link, {
 						to: "/products/$id",
 						params: { id: product.id },
@@ -49,19 +49,19 @@ function ProductCard({ product, index = 0 }) {
 					})
 				}),
 				/* @__PURE__ */ jsxs("p", {
-					className: "mt-1 text-xs text-muted-foreground",
+					className: "mt-1 text-[11px] text-muted-foreground",
 					children: ["Model: ", product.model]
 				}),
 				/* @__PURE__ */ jsx("p", {
-					className: "mt-3 text-sm text-muted-foreground line-clamp-2",
+					className: "mt-2 text-xs text-muted-foreground line-clamp-2",
 					children: product.shortDescription
 				}),
 				/* @__PURE__ */ jsx("div", {
-					className: "mt-5 pt-5 border-t border-border",
+					className: "mt-4 pt-3 border-t border-border",
 					children: /* @__PURE__ */ jsxs(Link, {
 						to: "/products/$id",
 						params: { id: product.id },
-						className: "inline-flex items-center gap-2 text-sm font-semibold text-brand group/link",
+						className: "inline-flex items-center gap-1.5 text-xs font-semibold text-brand group/link",
 						children: ["View Details", /* @__PURE__ */ jsx(FiArrowRight, { className: "transition-transform group-hover/link:translate-x-1" })]
 					})
 				})

@@ -1,6 +1,6 @@
 import { n as PRODUCTS, t as CATEGORIES } from "./products-B9kQzlJc.js";
-import { t as Route$5 } from "./products.index-RzWNOItU.js";
-import { t as Route$6 } from "./products._id-D9beHLN3.js";
+import { t as Route$5 } from "./products.index-OQ5nfYku.js";
+import { t as Route$6 } from "./products._id-C2SlhUgm.js";
 import { useEffect, useState } from "react";
 import { HeadContent, Link, Outlet, Scripts, createFileRoute, createRootRouteWithContext, createRouter, lazyRouteComponent, useRouter } from "@tanstack/react-router";
 import { jsx, jsxs } from "react/jsx-runtime";
@@ -10,7 +10,7 @@ import { BsWhatsapp } from "react-icons/bs";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 //#region src/styles.css?url
-var styles_default = "./assets/styles-Cyy02-_4.css";
+var styles_default = "./assets/styles-Ch-0G9Cm.css";
 //#endregion
 //#region src/lib/lovable-error-reporting.ts
 function reportLovableError(error, context = {}) {
@@ -360,11 +360,11 @@ function Footer() {
 						}),
 						/* @__PURE__ */ jsxs("li", {
 							className: "flex items-start gap-3",
-							children: [/* @__PURE__ */ jsx(FiPhone, { className: "mt-0.5 h-4 w-4 shrink-0" }), /* @__PURE__ */ jsx("span", { children: "03005254953" })]
+							children: [/* @__PURE__ */ jsx(FiPhone, { className: "mt-0.5 h-4 w-4 shrink-0" }), /* @__PURE__ */ jsx("span", { children: "03340503503" })]
 						}),
 						/* @__PURE__ */ jsxs("li", {
 							className: "flex items-start gap-3",
-							children: [/* @__PURE__ */ jsx(FiMail, { className: "mt-0.5 h-4 w-4 shrink-0" }), /* @__PURE__ */ jsx("span", { children: "aquacity@gmail.com" })]
+							children: [/* @__PURE__ */ jsx(FiMail, { className: "mt-0.5 h-4 w-4 shrink-0" }), /* @__PURE__ */ jsx("span", { children: "aquacityrwp1@gmail.com" })]
 						})
 					]
 				})] })
@@ -559,7 +559,7 @@ function RootComponent() {
 }
 //#endregion
 //#region src/routes/index.tsx
-var $$splitComponentImporter$2 = () => import("./routes-DbQkqe4b.js");
+var $$splitComponentImporter$2 = () => import("./routes-DTmKAIk4.js");
 var Route$3 = createFileRoute("/")({
 	head: () => ({ meta: [
 		{ title: "Aqua City Water Filters — Pure Water. Healthier Living." },
@@ -617,7 +617,7 @@ var Route$2 = createFileRoute("/about")({
 });
 //#endregion
 //#region src/routes/contact.tsx
-var $$splitComponentImporter = () => import("./contact-BeIe7-BJ.js");
+var $$splitComponentImporter = () => import("./contact-DFyofhLv.js");
 var Route$1 = createFileRoute("/contact")({
 	head: () => ({ meta: [
 		{ title: "Contact Aquacity Water Filters — Free Consultation & Water Testing" },

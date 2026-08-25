@@ -1,6 +1,6 @@
 import { n as PRODUCTS, t as CATEGORIES } from "./products-B9kQzlJc.js";
-import { t as Route } from "./products.index-RzWNOItU.js";
-import { t as ProductCard } from "./ProductCard-DdCqCB5b.js";
+import { t as Route } from "./products.index-OQ5nfYku.js";
+import { t as ProductCard } from "./ProductCard-lOpxqj_U.js";
 import { useMemo, useState } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import { FiFilter, FiSearch, FiX } from "react-icons/fi";

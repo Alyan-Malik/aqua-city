@@ -1,6 +1,6 @@
 import { n as PRODUCTS, t as CATEGORIES } from "./products-B9kQzlJc.js";
 import { n as SectionTitle, t as FeatureCard } from "./FeatureCard-D6UWeYNW.js";
-import { t as ProductCard } from "./ProductCard-DdCqCB5b.js";
+import { t as ProductCard } from "./ProductCard-lOpxqj_U.js";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
@@ -707,7 +707,7 @@ function Home() {
 									}), /* @__PURE__ */ jsxs("a", {
 										href: "tel:+923005254953",
 										className: "btn-ghost-light",
-										children: [/* @__PURE__ */ jsx(FiPhone, {}), " Call\xA0 03005254953"]
+										children: [/* @__PURE__ */ jsx(FiPhone, {}), " Call\xA0 03340503503"]
 									})]
 								})
 							]

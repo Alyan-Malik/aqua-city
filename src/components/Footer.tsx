@@ -92,11 +92,11 @@ K-25 MAIN MURREE ROAD RAWALPINDI</span>
             </li>
             <li className="flex items-start gap-3">
               <FiPhone className="mt-0.5 h-4 w-4 shrink-0" />
-              <span>03005254953</span>
+              <span>03340503503</span>
             </li>
             <li className="flex items-start gap-3">
               <FiMail className="mt-0.5 h-4 w-4 shrink-0" />
-              <span>aquacity@gmail.com</span>
+              <span>aquacityrwp1@gmail.com</span>
             </li>
           </ul>
         </div>
