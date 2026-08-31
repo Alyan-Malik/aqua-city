@@ -11,8 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminProductsRouteImport } from './routes/admin.products'
+import { Route as AdminProfileRouteImport } from './routes/admin.profile'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsIdRouteImport } from './routes/products.$id'
 
@@ -26,15 +32,45 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProductsRoute = AdminProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProfileRoute = AdminProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AdminRoute,
 } as any)
 const ProductsIndexRoute = ProductsIndexRouteImport.update({
   id: '/products/',
@@ -50,16 +86,28 @@ const ProductsIdRoute = ProductsIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/products': typeof AdminProductsRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/products/$id': typeof ProductsIdRoute
   '/products/': typeof ProductsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/products': typeof AdminProductsRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/products/$id': typeof ProductsIdRoute
   '/products': typeof ProductsIndexRoute
 }
@@ -67,8 +115,14 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/products': typeof AdminProductsRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/products/$id': typeof ProductsIdRoute
   '/products/': typeof ProductsIndexRoute
 }
@@ -77,19 +131,42 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/contact'
+    | '/login'
     | '/sitemap.xml'
+    | '/admin/categories'
+    | '/admin/dashboard'
+    | '/admin/products'
+    | '/admin/profile'
     | '/products/$id'
     | '/products/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/about' | '/contact' | '/sitemap.xml' | '/products/$id' | '/products'
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/contact'
+    | '/login'
+    | '/sitemap.xml'
+    | '/admin/categories'
+    | '/admin/dashboard'
+    | '/admin/products'
+    | '/admin/profile'
+    | '/products/$id'
+    | '/products'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/contact'
+    | '/login'
     | '/sitemap.xml'
+    | '/admin/categories'
+    | '/admin/dashboard'
+    | '/admin/products'
+    | '/admin/profile'
     | '/products/$id'
     | '/products/'
   fileRoutesById: FileRoutesById
@@ -97,7 +174,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ContactRoute: typeof ContactRoute
+  LoginRoute: typeof LoginRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ProductsIdRoute: typeof ProductsIdRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
@@ -119,11 +198,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -132,6 +225,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/products': {
+      id: '/admin/products'
+      path: '/products'
+      fullPath: '/admin/products'
+      preLoaderRoute: typeof AdminProductsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/profile': {
+      id: '/admin/profile'
+      path: '/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminProfileRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/products/': {
       id: '/products/'
@@ -150,10 +271,28 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminProductsRoute: typeof AdminProductsRoute
+  AdminProfileRoute: typeof AdminProfileRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminCategoriesRoute: AdminCategoriesRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminProductsRoute: AdminProductsRoute,
+  AdminProfileRoute: AdminProfileRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
   ContactRoute: ContactRoute,
+  LoginRoute: LoginRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ProductsIdRoute: ProductsIdRoute,
   ProductsIndexRoute: ProductsIndexRoute,

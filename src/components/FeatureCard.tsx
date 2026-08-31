@@ -15,13 +15,13 @@ export function FeatureCard({ icon: Icon, title, description, index = 0 }: Props
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="card-surface card-lift p-7"
+      className="card-surface card-lift p-3.5 sm:p-4"
     >
-      <div className="grid h-12 w-12 place-items-center rounded-xl bg-brand-soft text-brand">
-        <Icon className="h-6 w-6" />
+      <div className="grid h-9 w-9 place-items-center rounded-lg bg-brand-soft text-brand">
+        <Icon className="h-4 w-4" />
       </div>
-      <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{description}</p>
+      <h3 className="mt-3 text-sm sm:text-base font-semibold leading-snug">{title}</h3>
+      <p className="mt-1.5 text-[11px] sm:text-xs text-muted-foreground leading-relaxed line-clamp-3">{description}</p>
     </motion.div>
   );
 }

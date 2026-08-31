@@ -1,44 +1,52 @@
+// src/components/Footer.tsx
 import { Link } from "@tanstack/react-router";
 import { FiDroplet, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
-import { CATEGORIES } from "../data/products";
+import { useCategories } from "../hooks/useProducts";
 
 export function Footer() {
+  // Fetch real categories from API
+  const { categories, isLoading: categoriesLoading } = useCategories();
+
+  // Transform categories to the format needed for the footer
+  const categoryList = categories.map((cat: any) => ({
+    name: cat.name,
+  }));
+
   return (
     <footer className="mt-24 bg-brand text-white">
       <div className="container-x py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
-         <div className="flex items-center">
-  <img
-    src="/images/logo2.png"
-    alt="Aqua City Logo"
-    className="h-30 w-auto object-contain brightness-0 invert" 
-    /* Tip: Remove 'brightness-0 invert' if your logo image is already visible on dark backgrounds */
-  />
-</div>
+          <div className="flex items-center">
+            <img
+              src="/images/logo2.png"
+              alt="Aqua City Logo"
+              className="h-30 w-auto object-contain brightness-0 invert"
+            />
+          </div>
           <p className="mt-5 text-sm text-white/70 leading-relaxed">
             Premium water filtration systems for homes, businesses and industries. Trusted for
             clean, safe and healthy water since 2008.
           </p>
-         <div className="mt-5 flex items-center gap-3">
-  {[
-    { icon: FaFacebookF, href: "#", label: "Facebook" },
-    { icon: FaInstagram, href: "#", label: "Instagram" },
-    { icon: FaLinkedinIn, href: "#", label: "LinkedIn" },
-    { icon: FaWhatsapp, href: "https://wa.me/923005254953", label: "WhatsApp" },
-  ].map(({ icon: Icon, href, label }, i) => (
-    <a
-      key={i}
-      href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-      aria-label={label}
-      className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-white hover:text-brand transition-colors"
-    >
-      <Icon className="h-4 w-4" />
-    </a>
-  ))}
-</div>
+          <div className="mt-5 flex items-center gap-3">
+            {[
+              { icon: FaFacebookF, href: "#", label: "Facebook" },
+              { icon: FaInstagram, href: "#", label: "Instagram" },
+              { icon: FaLinkedinIn, href: "#", label: "LinkedIn" },
+              { icon: FaWhatsapp, href: "https://wa.me/923005254953", label: "WhatsApp" },
+            ].map(({ icon: Icon, href, label }, i) => (
+              <a
+                key={i}
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                aria-label={label}
+                className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-white hover:text-brand transition-colors"
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
         </div>
 
         <div>
@@ -66,17 +74,28 @@ export function Footer() {
             Categories
           </h4>
           <ul className="mt-5 space-y-3 text-sm text-white/70">
-            {CATEGORIES.map((c) => (
-              <li key={c}>
-                <Link
-                  to="/products"
-                  search={{ category: c } as never}
-                  className="hover:text-white transition-colors"
-                >
-                  {c}
-                </Link>
-              </li>
-            ))}
+            {categoriesLoading ? (
+              // Show loading skeletons
+              Array.from({ length: 6 }).map((_, i) => (
+                <li key={i}>
+                  <div className="h-4 bg-white/10 rounded animate-pulse"></div>
+                </li>
+              ))
+            ) : categoryList.length > 0 ? (
+              categoryList.map((cat: { name: string }) => (
+                <li key={cat.name}>
+                  <Link
+                    to="/products"
+                    search={{ category: cat.name } as never}
+                    className="hover:text-white transition-colors"
+                  >
+                    {cat.name}
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li className="text-white/50">No categories available</li>
+            )}
           </ul>
         </div>
 

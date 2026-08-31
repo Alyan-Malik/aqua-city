@@ -1,4 +1,6 @@
+// src/routes/products.$id.tsx
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
@@ -11,13 +13,44 @@ import {
   FiX,
 } from "react-icons/fi";
 import { ProductCard } from "../components/ProductCard";
-import { getProduct, relatedProducts, type Product } from "../data/products";
+import { productApi } from "../api/products";
+import { useProducts } from "../hooks/useProducts";
+import { ProductImage } from "../types";
+
+// Import static data for fallback
+import {
+  getProduct as getStaticProduct,
+  relatedProducts as getStaticRelated,
+  type Product as StaticProduct,
+} from "../data/products";
 
 export const Route = createFileRoute("/products/$id")({
-  loader: ({ params }) => {
-    const product = getProduct(params.id);
-    if (!product) throw notFound();
-    return { product };
+  loader: async ({ params, context }) => {
+    const { queryClient } = context;
+    try {
+      const response = await queryClient.ensureQueryData({
+        queryKey: ["product", params.id],
+        queryFn: () => productApi.getById(Number(params.id)),
+      });
+      
+      if (!response?.data?.data) {
+        // If not found in API, try static data as fallback
+        const staticProduct = getStaticProduct(params.id);
+        if (staticProduct) {
+          return { product: staticProduct, isStatic: true };
+        }
+        throw notFound();
+      }
+      
+      return { product: response.data.data, isStatic: false };
+    } catch (error) {
+      // Try static data as fallback
+      const staticProduct = getStaticProduct(params.id);
+      if (staticProduct) {
+        return { product: staticProduct, isStatic: true };
+      }
+      throw notFound();
+    }
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
@@ -29,16 +62,20 @@ export const Route = createFileRoute("/products/$id")({
       };
     }
     const p = loaderData.product;
+    const productName = p.name || "Product";
+    const productDesc = p.shortDescription || p.description || "Water filtration product";
+    const productImage = p.image || p.images?.[0]?.image || "/images/placeholder.jpg";
+    
     return {
       meta: [
-        { title: `${p.name} — Aqua City` },
-        { name: "description", content: p.shortDescription },
-        { property: "og:title", content: `${p.name} — Aqua City` },
-        { property: "og:description", content: p.shortDescription },
+        { title: `${productName} — Aqua City` },
+        { name: "description", content: productDesc },
+        { property: "og:title", content: `${productName} — Aqua City` },
+        { property: "og:description", content: productDesc },
         { property: "og:type", content: "website" },
-        { property: "og:image", content: p.image },
+        { property: "og:image", content: productImage },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: p.image },
+        { name: "twitter:image", content: productImage },
       ],
     };
   },
@@ -53,12 +90,64 @@ export const Route = createFileRoute("/products/$id")({
 });
 
 function ProductDetail() {
-  const { product } = Route.useLoaderData() as { product: Product };
+  const { product, isStatic } = Route.useLoaderData() as { 
+    product: any; 
+    isStatic: boolean;
+  };
+  
   const [active, setActive] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
-  const related = relatedProducts(product.id, product.category, 3);
+
+  // Get related products from API or static
+  const { products: apiProducts } = useProducts();
+  const staticRelated = isStatic ? getStaticRelated(product.id, product.category, 3) : [];
+  
+  // Get related products from API
+  const related = isStatic 
+    ? staticRelated 
+    : apiProducts
+        .filter((p: any) => p.id !== product.id && p.category?.name === product.category?.name)
+        .slice(0, 3);
+
+  // Build gallery images
+  const galleryImages = product.images 
+    ? product.images.map((img: ProductImage) => 
+        `https://api.aquacityonline.shop/storage/${img.image}`
+      )
+    : product.gallery || [product.image || '/images/placeholder.jpg'];
+
+  // Get key features
+  const features = Array.isArray(product.key_features) 
+    ? product.key_features 
+    : product.key_features 
+      ? JSON.parse(product.key_features as string) 
+      : product.features || [];
+
+  // Get specs - use API data if available, otherwise static
+  const specs = product.specs || [
+    { label: "Certifications", value: "NSF / WQA / ISO 9001" },
+    { label: "Warranty", value: "2 Years Limited" },
+    { label: "Operating Pressure", value: "40 – 80 PSI" },
+    { label: "Operating Temperature", value: "4°C – 40°C" },
+  ];
+
+  // Get applications - use API data if available, otherwise static
+  const applications = product.applications || [
+    "Residential kitchens & drinking water lines",
+    "Restaurants, cafes and hospitality",
+    "Offices and small commercial spaces",
+    "Schools, clinics and community facilities",
+  ];
+
+  // Get benefits - use API data if available, otherwise static
+  const benefits = product.benefits || [
+    "Removes chlorine, heavy metals and sediments",
+    "Improves taste, clarity and odor",
+    "Reduces plastic bottle waste",
+    "Low maintenance with long cartridge life",
+  ];
 
   useEffect(() => {
     if (!lightboxOpen) return;
@@ -90,14 +179,12 @@ function ProductDetail() {
       document.body.appendChild(link);
       link.click();
       
-      // Clean up
       document.body.removeChild(link);
       window.URL.revokeObjectURL(blobUrl);
 
       setDownloaded(true);
       setTimeout(() => setDownloaded(false), 3000);
     } catch {
-      // Direct anchor link fallback if fetch is blocked
       const link = document.createElement("a");
       link.href = pdfUrl;
       link.download = fileName;
@@ -142,13 +229,13 @@ function ProductDetail() {
               className="card-surface block w-full overflow-hidden aspect-[4/3] bg-muted cursor-zoom-in"
             >
               <img
-                src={product.gallery[active]}
+                src={galleryImages[active] || '/images/placeholder.jpg'}
                 alt={product.name}
                 className="h-full w-full object-cover"
               />
             </button>
             <div className="mt-4 grid grid-cols-4 gap-3">
-              {product.gallery.map((g, i) => (
+              {galleryImages.map((g: string, i: number) => (
                 <button
                   key={i}
                   onClick={() => setActive(i)}
@@ -179,7 +266,7 @@ function ProductDetail() {
                 <FiX className="h-5 w-5" />
               </button>
               <img
-                src={product.gallery[active]}
+                src={galleryImages[active] || '/images/placeholder.jpg'}
                 alt={product.name}
                 onClick={(event) => event.stopPropagation()}
                 className="max-h-[90vh] max-w-full object-contain"
@@ -193,28 +280,30 @@ function ProductDetail() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <span className="eyebrow">{product.category}</span>
+            <span className="eyebrow">{product.category?.name || product.category || 'Uncategorized'}</span>
             <h1 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-balance">
               {product.name}
             </h1>
-            <p className="mt-3 text-sm text-muted-foreground">Model No: {product.model}</p>
+            <p className="mt-3 text-sm text-muted-foreground">Model No: {product.model || product.model_no || 'N/A'}</p>
             <p className="mt-6 text-base leading-relaxed text-foreground/80">
-              {product.overview}
+              {product.overview || product.description || 'No description available.'}
             </p>
 
-            <div className="mt-8">
-              <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                Key Features
-              </h3>
-              <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-                {product.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm">
-                    <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {features.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  Key Features
+                </h3>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {features.map((f: string) => (
+                    <li key={f} className="flex items-start gap-3 text-sm">
+                      <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className="mt-10 flex flex-wrap gap-3">
               <Link to="/contact" className="btn-primary">
@@ -225,50 +314,50 @@ function ProductDetail() {
               </Link>
             </div>
 
-           {/* Direct PDF Download Card */}
-<div className="mt-8 card-surface p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-4 bg-brand-soft border-brand/20 rounded-2xl">
-  <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-    <div className="grid h-10 w-10 sm:h-11 sm:w-11 place-items-center rounded-full bg-white text-brand shrink-0 shadow-sm">
-      <FiDownload className="text-base sm:text-lg" />
-    </div>
-    <div className="flex-1 min-w-0 sm:hidden">
-      <div className="text-sm font-semibold leading-snug">Product Brochure & Manual</div>
-      <div className="text-xs text-muted-foreground mt-0.5">
-        Download datasheet & universal installation guide (PDF)
-      </div>
-    </div>
-  </div>
+            {/* Direct PDF Download Card */}
+            <div className="mt-8 card-surface p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-4 bg-brand-soft border-brand/20 rounded-2xl">
+              <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                <div className="grid h-10 w-10 sm:h-11 sm:w-11 place-items-center rounded-full bg-white text-brand shrink-0 shadow-sm">
+                  <FiDownload className="text-base sm:text-lg" />
+                </div>
+                <div className="flex-1 min-w-0 sm:hidden">
+                  <div className="text-sm font-semibold leading-snug">Product Brochure & Manual</div>
+                  <div className="text-xs text-muted-foreground mt-0.5">
+                    Download datasheet & universal installation guide (PDF)
+                  </div>
+                </div>
+              </div>
 
-  <div className="hidden sm:block flex-1 min-w-0">
-    <div className="text-sm font-semibold">Product Brochure & Manual</div>
-    <div className="text-xs text-muted-foreground">
-      Download datasheet & universal installation guide (PDF)
-    </div>
-  </div>
+              <div className="hidden sm:block flex-1 min-w-0">
+                <div className="text-sm font-semibold">Product Brochure & Manual</div>
+                <div className="text-xs text-muted-foreground">
+                  Download datasheet & universal installation guide (PDF)
+                </div>
+              </div>
 
-  <button
-    onClick={handleDownloadPDF}
-    disabled={downloading}
-    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold text-brand border border-brand/30 bg-white hover:bg-brand hover:text-white transition-all disabled:opacity-50"
-  >
-    {downloading ? (
-      <>
-        <FiLoader className="animate-spin" />
-        <span>Downloading...</span>
-      </>
-    ) : downloaded ? (
-      <>
-        <FiCheckCircle className="text-green-500" />
-        <span>Downloaded</span>
-      </>
-    ) : (
-      <>
-        <FiDownload />
-        <span>Download PDF</span>
-      </>
-    )}
-  </button>
-</div>
+              <button
+                onClick={handleDownloadPDF}
+                disabled={downloading}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold text-brand border border-brand/30 bg-white hover:bg-brand hover:text-white transition-all disabled:opacity-50"
+              >
+                {downloading ? (
+                  <>
+                    <FiLoader className="animate-spin" />
+                    <span>Downloading...</span>
+                  </>
+                ) : downloaded ? (
+                  <>
+                    <FiCheckCircle className="text-green-500" />
+                    <span>Downloaded</span>
+                  </>
+                ) : (
+                  <>
+                    <FiDownload />
+                    <span>Download PDF</span>
+                  </>
+                )}
+              </button>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -279,7 +368,7 @@ function ProductDetail() {
           <div className="card-surface p-7 lg:col-span-1">
             <h3 className="text-lg font-semibold">Technical Specifications</h3>
             <dl className="mt-5 divide-y divide-border text-sm">
-              {product.specs.map((s) => (
+              {specs.map((s: { label: string; value: string }) => (
                 <div key={s.label} className="flex items-start justify-between gap-4 py-3">
                   <dt className="text-muted-foreground">{s.label}</dt>
                   <dd className="font-medium text-right">{s.value}</dd>
@@ -291,7 +380,7 @@ function ProductDetail() {
           <div className="card-surface p-7">
             <h3 className="text-lg font-semibold">Applications</h3>
             <ul className="mt-5 space-y-3 text-sm">
-              {product.applications.map((a) => (
+              {applications.map((a: string) => (
                 <li key={a} className="flex items-start gap-3">
                   <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                   <span>{a}</span>
@@ -303,7 +392,7 @@ function ProductDetail() {
           <div className="card-surface p-7">
             <h3 className="text-lg font-semibold">Benefits</h3>
             <ul className="mt-5 space-y-3 text-sm">
-              {product.benefits.map((b) => (
+              {benefits.map((b: string) => (
                 <li key={b} className="flex items-start gap-3">
                   <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                   <span>{b}</span>
@@ -315,13 +404,13 @@ function ProductDetail() {
       </section>
 
       {/* Related */}
-      {related.length > 0 && (
+      {related && related.length > 0 && (
         <section className="pb-24 bg-secondary/50 py-20">
           <div className="container-x">
             <h2 className="text-2xl sm:text-3xl font-bold">Related products</h2>
-            <p className="mt-2 text-muted-foreground">More from {product.category}</p>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((p, i) => (
+            <p className="mt-2 text-muted-foreground">More from {product.category?.name || product.category || 'this category'}</p>
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+              {related.map((p: any, i: number) => (
                 <ProductCard key={p.id} product={p} index={i} />
               ))}
             </div>

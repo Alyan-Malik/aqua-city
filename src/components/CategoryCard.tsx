@@ -24,7 +24,7 @@ export function CategoryCard({ category, description, image, index = 0 }: Props)
         search={{ category } as never}
         className="card-surface card-lift block overflow-hidden"
       >
-        <div className="aspect-[4/3] overflow-hidden bg-muted">
+        <div className="aspect-[16/10] overflow-hidden bg-muted">
           <img
             src={image}
             alt={category}
@@ -32,12 +32,12 @@ export function CategoryCard({ category, description, image, index = 0 }: Props)
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        <div className="p-6">
-          <h3 className="text-lg font-semibold">{category}</h3>
-          <p className="mt-1.5 text-sm text-muted-foreground line-clamp-2">{description}</p>
-          <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand">
-            Explore range
-            <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+        <div className="p-3 sm:p-4">
+          <h3 className="text-sm sm:text-base font-semibold leading-snug">{category}</h3>
+          <p className="mt-1 text-[11px] sm:text-xs text-muted-foreground line-clamp-2">{description}</p>
+          <div className="mt-2.5 inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold text-brand">
+            Explore
+            <FiArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
           </div>
         </div>
       </Link>

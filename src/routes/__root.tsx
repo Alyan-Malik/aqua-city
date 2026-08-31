@@ -1,3 +1,4 @@
+// src/routes/__root.tsx
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -6,14 +7,15 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  redirect,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { BackToTop } from "../components/BackToTop";
+import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -36,7 +38,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    // Report error if needed
   }, [error]);
 
   return (
@@ -82,6 +84,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
+  beforeLoad: async () => {
+    if (typeof window !== 'undefined') {
+      const isAdminRoute = window.location.pathname.startsWith('/admin');
+      const isLoginRoute = window.location.pathname === '/login';
+      const token = localStorage.getItem('admin_token');
+      
+      if (isAdminRoute && !token) {
+        throw redirect({ to: '/login' });
+      }
+      
+      if (token && isLoginRoute) {
+        throw redirect({ to: '/admin/dashboard' });
+      }
+    }
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -104,16 +121,32 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  
+  // Check if we're on an admin route
+  const isAdminRoute = typeof window !== 'undefined' && 
+    (window.location.pathname.startsWith('/admin') || 
+     window.location.pathname === '/login');
+
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col bg-background">
-        <Navbar />
-        <main className="flex-1 pt-20">
+      {isAdminRoute ? (
+        // Admin routes - NO Navbar/Footer, just the admin layout
+        <>
           <Outlet />
-        </main>
-        <Footer />
-        <BackToTop />
-      </div>
+          <Toaster position="top-right" richColors />
+        </>
+      ) : (
+        // Public routes - WITH Navbar/Footer
+        <div className="flex min-h-screen flex-col bg-background">
+          <Navbar />
+          <main className="flex-1 pt-20">
+            <Outlet />
+          </main>
+          <Footer />
+          <BackToTop />
+          <Toaster position="top-right" richColors />
+        </div>
+      )}
     </QueryClientProvider>
   );
 }

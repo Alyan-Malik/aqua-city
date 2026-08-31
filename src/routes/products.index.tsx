@@ -1,10 +1,12 @@
+// src/routes/products.index.tsx
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { FiFilter, FiSearch, FiX } from "react-icons/fi";
 import { z } from "zod";
 import { ProductCard } from "../components/ProductCard";
-import { CATEGORIES, PRODUCTS, type Category } from "../data/products";
+import { useProducts, useCategories } from "../hooks/useProducts";
+import type { Category } from "../types";
 
 const searchSchema = z.object({
   category: z.string().optional(),
@@ -33,32 +35,76 @@ type SortKey = "featured" | "az" | "za";
 
 function ProductsPage() {
   const search = Route.useSearch();
-  const initial = (search.category as Category | undefined) ?? "All";
+  const { products, isLoading: productsLoading } = useProducts();
+  const { categories, isLoading: categoriesLoading } = useCategories();
 
-  const [activeCat, setActiveCat] = useState<Category | "All">(initial);
+  const [activeCat, setActiveCat] = useState<string>("All");
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("featured");
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  // Build category list from API response
+  const categoryList = useMemo(() => {
+    const catNames = categories.map((cat: Category) => cat.name);
+    return ["All", ...catNames];
+  }, [categories]);
+
+  // Filter products based on search and category
   const filtered = useMemo(() => {
-    let list = [...PRODUCTS];
-    if (activeCat !== "All") list = list.filter((p) => p.category === activeCat);
+    let list = [...products];
+    
+    if (activeCat !== "All") {
+      list = list.filter((p: (typeof products)[number]) => p.category?.name === activeCat);
+    }
+    
     const q = query.trim().toLowerCase();
     if (q) {
-      list = list.filter((p) =>
-        [p.name, p.model, ...p.keywords].some((f) => f.toLowerCase().includes(q)),
-      );
+      list = list.filter((p: (typeof products)[number]) => {
+        const searchFields = [
+          p.name,
+          p.model_no || '',
+          p.description || '',
+          ...(Array.isArray(p.key_features) ? p.key_features : []),
+        ];
+        return searchFields.some((field) => 
+          field.toLowerCase().includes(q)
+        );
+      });
     }
+    
     if (sort === "az") list.sort((a, b) => a.name.localeCompare(b.name));
     if (sort === "za") list.sort((a, b) => b.name.localeCompare(a.name));
+    
     return list;
-  }, [activeCat, query, sort]);
+  }, [products, activeCat, query, sort]);
 
+  // Count products per category
   const counts = useMemo(() => {
-    const c: Record<string, number> = { All: PRODUCTS.length };
-    for (const cat of CATEGORIES) c[cat] = PRODUCTS.filter((p) => p.category === cat).length;
+    const c: Record<string, number> = { All: products.length };
+    categories.forEach((cat: Category) => {
+      c[cat.name] = products.filter((p: (typeof products)[number]) => p.category?.name === cat.name).length;
+    });
     return c;
-  }, []);
+  }, [products, categories]);
+
+  // Set initial category from URL param
+  useMemo(() => {
+    if (search.category) {
+      const found = categories.find((cat: Category) => cat.name === search.category);
+      if (found) setActiveCat(search.category);
+    }
+  }, [search.category, categories]);
+
+  if (productsLoading || categoriesLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl mb-4">🔄</div>
+          <p className="text-muted-foreground">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
 
   const FilterPanel = (
     <div className="space-y-8">
@@ -67,13 +113,13 @@ function ProductsPage() {
           Categories
         </h3>
         <ul className="mt-4 space-y-1.5">
-          {(["All", ...CATEGORIES] as const).map((c) => {
-            const active = activeCat === c;
+          {categoryList.map((cat) => {
+            const active = activeCat === cat;
             return (
-              <li key={c}>
+              <li key={cat}>
                 <button
                   onClick={() => {
-                    setActiveCat(c);
+                    setActiveCat(cat);
                     setMobileOpen(false);
                   }}
                   className={`w-full flex items-center justify-between rounded-xl px-4 py-2.5 text-sm text-left transition-colors ${
@@ -82,13 +128,13 @@ function ProductsPage() {
                       : "hover:bg-secondary text-foreground/80"
                   }`}
                 >
-                  <span>{c}</span>
+                  <span>{cat}</span>
                   <span
                     className={`text-xs px-2 py-0.5 rounded-full ${
                       active ? "bg-white/20" : "bg-secondary text-muted-foreground"
                     }`}
                   >
-                    {counts[c]}
+                    {counts[cat] || 0}
                   </span>
                 </button>
               </li>
@@ -166,7 +212,7 @@ function ProductsPage() {
             <div className="mb-6 flex items-baseline justify-between">
               <p className="text-sm text-muted-foreground">
                 Showing <strong className="text-foreground">{filtered.length}</strong> of{" "}
-                {PRODUCTS.length} products
+                {products.length} products
                 {activeCat !== "All" && <> in <strong className="text-foreground">{activeCat}</strong></>}
               </p>
               {(activeCat !== "All" || query) && (
@@ -185,7 +231,7 @@ function ProductsPage() {
                 <p className="mt-2 text-sm text-muted-foreground">Try a different keyword or clear the filters.</p>
               </div>
             ) : (
-              <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
                 {filtered.map((p, i) => (
                   <ProductCard key={p.id} product={p} index={i} />
                 ))}
