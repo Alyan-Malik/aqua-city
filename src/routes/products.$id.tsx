@@ -11,11 +11,13 @@ import {
   FiMail,
   FiPhone,
   FiX,
+  FiShoppingCart,
 } from "react-icons/fi";
+import { BsWhatsapp } from "react-icons/bs";
 import { ProductCard } from "../components/ProductCard";
 import { productApi } from "../api/products";
 import { useProducts } from "../hooks/useProducts";
-import { ProductImage } from "../types";
+import { ProductImage, Product } from "../types";
 
 // Import static data for fallback
 import {
@@ -32,7 +34,7 @@ export const Route = createFileRoute("/products/$id")({
         queryKey: ["product", params.id],
         queryFn: () => productApi.getById(Number(params.id)),
       });
-      
+
       if (!response?.data?.data) {
         // If not found in API, try static data as fallback
         const staticProduct = getStaticProduct(params.id);
@@ -41,7 +43,7 @@ export const Route = createFileRoute("/products/$id")({
         }
         throw notFound();
       }
-      
+
       return { product: response.data.data, isStatic: false };
     } catch (error) {
       // Try static data as fallback
@@ -55,17 +57,14 @@ export const Route = createFileRoute("/products/$id")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [
-          { title: "Product not found — Aqua City" },
-          { name: "robots", content: "noindex" },
-        ],
+        meta: [{ title: "Product not found — Aqua City" }, { name: "robots", content: "noindex" }],
       };
     }
     const p = loaderData.product;
     const productName = p.name || "Product";
     const productDesc = p.shortDescription || p.description || "Water filtration product";
     const productImage = p.image || p.images?.[0]?.image || "/images/placeholder.jpg";
-    
+
     return {
       meta: [
         { title: `${productName} — Aqua City` },
@@ -83,18 +82,22 @@ export const Route = createFileRoute("/products/$id")({
   notFoundComponent: () => (
     <div className="container-x py-32 text-center">
       <h1 className="text-3xl font-bold">Product not found</h1>
-      <p className="mt-3 text-muted-foreground">The item you're looking for isn't in our catalog.</p>
-      <Link to="/products" className="btn-primary mt-8">Back to catalog</Link>
+      <p className="mt-3 text-muted-foreground">
+        The item you're looking for isn't in our catalog.
+      </p>
+      <Link to="/products" className="btn-primary mt-8">
+        Back to catalog
+      </Link>
     </div>
   ),
 });
 
 function ProductDetail() {
-  const { product, isStatic } = Route.useLoaderData() as { 
-    product: any; 
+  const { product, isStatic } = Route.useLoaderData() as {
+    product: StaticProduct & Product;
     isStatic: boolean;
   };
-  
+
   const [active, setActive] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [downloading, setDownloading] = useState(false);
@@ -103,26 +106,24 @@ function ProductDetail() {
   // Get related products from API or static
   const { products: apiProducts } = useProducts();
   const staticRelated = isStatic ? getStaticRelated(product.id, product.category, 3) : [];
-  
+
   // Get related products from API
-  const related = isStatic 
-    ? staticRelated 
+  const related = isStatic
+    ? staticRelated
     : apiProducts
-        .filter((p: any) => p.id !== product.id && p.category?.name === product.category?.name)
+        .filter((p: Product) => p.id !== product.id && p.category?.name === product.category?.name)
         .slice(0, 3);
 
   // Build gallery images
-  const galleryImages = product.images 
-    ? product.images.map((img: ProductImage) => 
-        `https://api.aquacityonline.shop/storage/${img.image}`
-      )
-    : product.gallery || [product.image || '/images/placeholder.jpg'];
+  const galleryImages = product.images
+    ? product.images.map((img: ProductImage) => `https://api.aquacityonline.shop/storage/${img.image}`)
+    : product.gallery || [product.image || "/images/placeholder.jpg"];
 
   // Get key features
-  const features = Array.isArray(product.key_features) 
-    ? product.key_features 
-    : product.key_features 
-      ? JSON.parse(product.key_features as string) 
+  const features = Array.isArray(product.key_features)
+    ? product.key_features
+    : product.key_features
+      ? JSON.parse(product.key_features as string)
       : product.features || [];
 
   // Get specs - use API data if available, otherwise static
@@ -149,6 +150,28 @@ function ProductDetail() {
     "Low maintenance with long cartridge life",
   ];
 
+  // Build WhatsApp order link with product info
+  const buildWhatsAppOrderLink = () => {
+    const phoneNumber = "923005254953"; // WhatsApp number without +
+    const productName = product.name;
+    const modelNo = product.model || product.model_no || "N/A";
+    const price = product.price ? `Rs ${Number(product.price).toFixed(2)}` : "Price on request";
+    const category = product.category?.name || product.category || "Product";
+    
+    const message = encodeURIComponent(
+      `Hello Aqua City! 👋\n\n` +
+      `I would like to order the following product:\n\n` +
+      `📦 *Product:* ${productName}\n` +
+      `🔖 *Model:* ${modelNo}\n` +
+      `📂 *Category:* ${category}\n` +
+      `💰 *Price:* ${price}\n\n` +
+      `Please provide me with more details and ordering information.\n\n` +
+      `Thank you!`
+    );
+
+    return `https://wa.me/${phoneNumber}?text=${message}`;
+  };
+
   useEffect(() => {
     if (!lightboxOpen) return;
 
@@ -172,13 +195,13 @@ function ProductDetail() {
 
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
-      
+
       const link = document.createElement("a");
       link.href = blobUrl;
       link.download = fileName;
       document.body.appendChild(link);
       link.click();
-      
+
       document.body.removeChild(link);
       window.URL.revokeObjectURL(blobUrl);
 
@@ -205,9 +228,13 @@ function ProductDetail() {
       {/* Breadcrumb */}
       <section className="border-b border-border bg-secondary/40 mt-12">
         <div className="container-x py-4 text-xs sm:text-sm text-muted-foreground flex items-center gap-2 flex-wrap">
-          <Link to="/" className="hover:text-brand">Home</Link>
+          <Link to="/" className="hover:text-brand">
+            Home
+          </Link>
           <FiChevronRight className="h-3.5 w-3.5" />
-          <Link to="/products" className="hover:text-brand">Products</Link>
+          <Link to="/products" className="hover:text-brand">
+            Products
+          </Link>
           <FiChevronRight className="h-3.5 w-3.5" />
           <span className="text-foreground font-medium truncate">{product.name}</span>
         </div>
@@ -226,24 +253,25 @@ function ProductDetail() {
               type="button"
               onClick={() => setLightboxOpen(true)}
               aria-label={`Open ${product.name} image in full size`}
-              className="card-surface block w-full overflow-hidden aspect-[4/3] bg-muted cursor-zoom-in"
+              className="card-surface block w-full overflow-hidden bg-white cursor-zoom-in"
             >
+              {/* Natural-ratio image: full photo visible, no bars, no crop */}
               <img
-                src={galleryImages[active] || '/images/placeholder.jpg'}
+                src={galleryImages[active] || "/images/placeholder.jpg"}
                 alt={product.name}
-                className="h-full w-full object-cover"
+                className="w-full h-auto max-h-[70vh] object-contain"
               />
             </button>
-            <div className="mt-4 grid grid-cols-4 gap-3">
+            <div className="mt-4 grid grid-cols-4 sm:grid-cols-5 gap-2 sm:gap-3">
               {galleryImages.map((g: string, i: number) => (
                 <button
                   key={i}
                   onClick={() => setActive(i)}
-                  className={`aspect-square overflow-hidden rounded-xl border-2 transition ${
-                    active === i ? "border-brand" : "border-transparent opacity-70 hover:opacity-100"
+                  className={`aspect-square overflow-hidden rounded-xl border-2 bg-white transition ${
+                    active === i ? "border-brand" : "border-border opacity-70 hover:opacity-100"
                   }`}
                 >
-                  <img src={g} alt="" className="h-full w-full object-cover" />
+                  <img src={g} alt="" className="h-full w-full object-contain" />
                 </button>
               ))}
             </div>
@@ -266,7 +294,7 @@ function ProductDetail() {
                 <FiX className="h-5 w-5" />
               </button>
               <img
-                src={galleryImages[active] || '/images/placeholder.jpg'}
+                src={galleryImages[active] || "/images/placeholder.jpg"}
                 alt={product.name}
                 onClick={(event) => event.stopPropagation()}
                 className="max-h-[90vh] max-w-full object-contain"
@@ -280,13 +308,17 @@ function ProductDetail() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <span className="eyebrow">{product.category?.name || product.category || 'Uncategorized'}</span>
+            <span className="eyebrow">
+              {product.category?.name || product.category || "Uncategorized"}
+            </span>
             <h1 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-balance">
               {product.name}
             </h1>
-            <p className="mt-3 text-sm text-muted-foreground">Model No: {product.model || product.model_no || 'N/A'}</p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Model No: {product.model || product.model_no || "N/A"}
+            </p>
             <p className="mt-6 text-base leading-relaxed text-foreground/80">
-              {product.overview || product.description || 'No description available.'}
+              {product.overview || product.description || "No description available."}
             </p>
 
             {features.length > 0 && (
@@ -305,12 +337,18 @@ function ProductDetail() {
               </div>
             )}
 
+            {/* Order Now & Contact Buttons */}
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/contact" className="btn-primary">
-                <FiMail /> Contact Us
-              </Link>
+              <a
+                href={buildWhatsAppOrderLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary bg-[#25D366] hover:bg-[#1ebe5b] !text-white"
+              >
+                <BsWhatsapp className="h-4 w-4" /> Order Now
+              </a>
               <Link to="/contact" className="btn-outline">
-                Request Information
+                <FiMail /> Contact Us
               </Link>
             </div>
 
@@ -321,7 +359,9 @@ function ProductDetail() {
                   <FiDownload className="text-base sm:text-lg" />
                 </div>
                 <div className="flex-1 min-w-0 sm:hidden">
-                  <div className="text-sm font-semibold leading-snug">Product Brochure & Manual</div>
+                  <div className="text-sm font-semibold leading-snug">
+                    Product Brochure & Manual
+                  </div>
                   <div className="text-xs text-muted-foreground mt-0.5">
                     Download datasheet & universal installation guide (PDF)
                   </div>
@@ -408,9 +448,11 @@ function ProductDetail() {
         <section className="pb-24 bg-secondary/50 py-20">
           <div className="container-x">
             <h2 className="text-2xl sm:text-3xl font-bold">Related products</h2>
-            <p className="mt-2 text-muted-foreground">More from {product.category?.name || product.category || 'this category'}</p>
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-              {related.map((p: any, i: number) => (
+            <p className="mt-2 text-muted-foreground">
+              More from {product.category?.name || product.category || "this category"}
+            </p>
+            <div className="mt-8 grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-4">
+              {related.map((p: Product, i: number) => (
                 <ProductCard key={p.id} product={p} index={i} />
               ))}
             </div>

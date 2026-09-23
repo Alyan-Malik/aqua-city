@@ -1,59 +1,94 @@
 // src/components/Navbar.tsx
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { FiMenu, FiX, FiPhone, FiChevronDown } from "react-icons/fi";
+import { FiMenu, FiX, FiPhone, FiChevronDown, FiMail, FiMapPin, FiClock } from "react-icons/fi";
 import { BsWhatsapp } from "react-icons/bs";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCategories } from "../hooks/useProducts";
+import type { Category } from "../types";
+
+const NAV_LINKS = [
+  { to: "/", label: "Home", exact: true },
+  { to: "/about", label: "About", exact: false },
+  { to: "/products", label: "Products", exact: true },
+  { to: "/contact", label: "Contact", exact: false },
+];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileCategoriesOpen, setMobileCategoriesOpen] = useState(false);
-  
-  // Fetch real categories from API
+
   const { categories, isLoading: categoriesLoading } = useCategories();
 
-  // Transform categories to the format needed for the navbar
-  const categoryList = categories.map((cat: any) => ({
+  const categoryList = categories.map((cat: Category) => ({
     label: cat.name,
     slug: cat.name,
   }));
-
-  // If categories are still loading, show empty array
   const displayCategories = categoriesLoading ? [] : categoryList;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur-md shadow-[0_4px_20px_-8px_rgba(9,36,96,0.15)] transition-all duration-300">
-      <div className="container-x flex items-center justify-between py-4">
+    <header className="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur-md shadow-[0_4px_24px_-8px_rgba(9,36,96,0.18)] transition-all duration-300">
+      {/* ── Top Info Bar ─────────────────────────────── */}
+      <div className="bg-brand text-white">
+        <div className="container-x flex items-center justify-between gap-4 py-1.5 text-[11px] sm:text-xs">
+          <div className="hidden md:flex items-center gap-5 text-white/80">
+            <span className="inline-flex items-center gap-1.5">
+              <FiMapPin className="h-3 w-3 text-cyan-300" />
+              K-25 Main Murree Road, Rawalpindi
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <FiClock className="h-3 w-3 text-cyan-300" />
+              Mon – Sat: 9:00 AM – 8:00 PM
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <FiMail className="h-3 w-3 text-cyan-300" />
+              aquacityrwp1@gmail.com
+            </span>
+          </div>
+
+          <span className="md:hidden inline-flex items-center gap-1.5 text-white/80">
+            <FiMapPin className="h-3 w-3 text-cyan-300" />
+            Main Murree Road, Rawalpindi
+          </span>
+
+          <div className="flex items-center gap-4 text-white/80">
+            <span className="hidden sm:inline">Free installation on all systems</span>
+            <a
+              href="tel:03340503503"
+              className="inline-flex items-center gap-1.5 font-semibold text-white hover:text-cyan-300 transition-colors"
+            >
+              <FiPhone className="h-3 w-3" />
+              0334 0503503
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Main Bar ────────────────────────────────── */}
+      <div className="container-x flex items-center justify-between py-3">
         <Link to="/" className="flex items-center gap-2.5 group">
           <img
             src="/images/logo2.png"
             alt="Aqua City Logo"
-            className="h-23 w-auto object-contain transition-transform group-hover:scale-105"
+            className="h-16 sm:h-18 lg:h-30 w-auto object-contain transition-transform group-hover:scale-105"
           />
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-1">
-          <Link
-            to="/"
-            activeOptions={{ exact: true }}
-            activeProps={{ className: "text-brand font-semibold" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-brand" }}
-            className="px-4 py-2 text-sm font-medium transition-colors"
-          >
-            Home
-          </Link>
-
-          <Link
-            to="/about"
-            activeProps={{ className: "text-brand font-semibold" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-brand" }}
-            className="px-4 py-2 text-sm font-medium transition-colors"
-          >
-            About
-          </Link>
+          {NAV_LINKS.filter((l) => l.to !== "/products").map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              activeOptions={{ exact: l.exact }}
+              activeProps={{ className: "text-brand font-semibold" }}
+              inactiveProps={{ className: "text-foreground/70 hover:text-brand" }}
+              className="px-4 py-2 text-sm font-medium transition-colors"
+            >
+              {l.label}
+            </Link>
+          ))}
 
           {/* Dropdown Menu for Categories */}
           <div
@@ -80,11 +115,10 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute left-0 top-full pt-2 w-64 z-50"
+                  className="absolute left-0 top-full pt-2 w-72 z-50"
                 >
                   <div className="bg-white rounded-2xl shadow-xl border border-border/60 p-2 grid gap-0.5">
                     {categoriesLoading ? (
-                      // Show loading skeletons
                       Array.from({ length: 6 }).map((_, i) => (
                         <div key={i} className="h-10 bg-muted rounded-xl animate-pulse"></div>
                       ))
@@ -120,18 +154,9 @@ export function Navbar() {
           >
             Products
           </Link>
-
-          <Link
-            to="/contact"
-            activeProps={{ className: "text-brand font-semibold" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-brand" }}
-            className="px-4 py-2 text-sm font-medium transition-colors"
-          >
-            Contact
-          </Link>
         </nav>
 
-        {/* Desktop Call & WhatsApp Action Buttons */}
+        {/* Desktop Action Buttons */}
         <div className="hidden lg:flex items-center gap-2.5">
           <a
             href="tel:03340503503"
@@ -173,26 +198,34 @@ export function Navbar() {
             className="lg:hidden bg-white border-t border-border shadow-lg max-h-[85vh] overflow-y-auto"
           >
             <div className="container-x py-4 flex flex-col gap-1">
-              <Link
-                to="/"
-                onClick={() => setOpen(false)}
-                activeOptions={{ exact: true }}
-                activeProps={{ className: "bg-accent text-brand" }}
-                inactiveProps={{ className: "text-foreground/80" }}
-                className="rounded-xl px-4 py-3 text-sm font-medium"
-              >
-                Home
-              </Link>
+              {/* Quick info for mobile */}
+              <div className="rounded-xl bg-secondary/70 p-3 mb-1 grid gap-2 text-xs text-muted-foreground">
+                <span className="inline-flex items-center gap-2">
+                  <FiClock className="h-3.5 w-3.5 text-brand shrink-0" />
+                  Mon – Sat: 9:00 AM – 8:00 PM
+                </span>
+                <a
+                  href="mailto:aquacityrwp1@gmail.com"
+                  className="inline-flex items-center gap-2 hover:text-brand transition-colors"
+                >
+                  <FiMail className="h-3.5 w-3.5 text-brand shrink-0" />
+                  aquacityrwp1@gmail.com
+                </a>
+              </div>
 
-              <Link
-                to="/about"
-                onClick={() => setOpen(false)}
-                activeProps={{ className: "bg-accent text-brand" }}
-                inactiveProps={{ className: "text-foreground/80" }}
-                className="rounded-xl px-4 py-3 text-sm font-medium"
-              >
-                About
-              </Link>
+              {NAV_LINKS.filter((l) => l.label !== "Products").map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  onClick={() => setOpen(false)}
+                  activeOptions={{ exact: l.exact }}
+                  activeProps={{ className: "bg-accent text-brand" }}
+                  inactiveProps={{ className: "text-foreground/80" }}
+                  className="rounded-xl px-4 py-3 text-sm font-medium"
+                >
+                  {l.label}
+                </Link>
+              ))}
 
               {/* Mobile Accordion for Categories */}
               <div>
@@ -217,7 +250,6 @@ export function Navbar() {
                       className="overflow-hidden pl-4 pr-2 flex flex-col gap-1 border-l-2 border-brand/20 my-1 ml-4"
                     >
                       {categoriesLoading ? (
-                        // Show loading skeletons
                         Array.from({ length: 6 }).map((_, i) => (
                           <div key={i} className="h-8 bg-muted rounded-lg animate-pulse"></div>
                         ))
@@ -252,16 +284,6 @@ export function Navbar() {
                 className="rounded-xl px-4 py-3 text-sm font-medium"
               >
                 Products
-              </Link>
-
-              <Link
-                to="/contact"
-                onClick={() => setOpen(false)}
-                activeProps={{ className: "bg-accent text-brand" }}
-                inactiveProps={{ className: "text-foreground/80" }}
-                className="rounded-xl px-4 py-3 text-sm font-medium"
-              >
-                Contact
               </Link>
 
               {/* Mobile Action Buttons */}

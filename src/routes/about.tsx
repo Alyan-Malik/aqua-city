@@ -1,12 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import {
-  FiAward,
-  FiEye,
-  FiHeart,
-  FiTarget,
-  FiUsers,
-} from "react-icons/fi";
+import { FiAward, FiEye, FiHeart, FiTarget, FiUsers } from "react-icons/fi";
 import { SectionTitle } from "../components/SectionTitle";
 import { FeatureCard } from "../components/FeatureCard";
 
@@ -25,19 +19,42 @@ const STATS = [
 ];
 
 const VALUES = [
-  { icon: FiAward, title: "Quality First", description: "Every component is tested to global certification standards." },
-  { icon: FiHeart, title: "Customer Care", description: "We treat every install as if it were in our own home." },
-  { icon: FiTarget, title: "Precision", description: "Systems sized and tuned to each site's exact water profile." },
-  { icon: FiUsers, title: "Community", description: "Investing in local training, jobs and water education." },
+  {
+    icon: FiAward,
+    title: "Quality First",
+    description: "Every component is tested to global certification standards.",
+  },
+  {
+    icon: FiHeart,
+    title: "Customer Care",
+    description: "We treat every install as if it were in our own home.",
+  },
+  {
+    icon: FiTarget,
+    title: "Precision",
+    description: "Systems sized and tuned to each site's exact water profile.",
+  },
+  {
+    icon: FiUsers,
+    title: "Community",
+    description: "Investing in local training, jobs and water education.",
+  },
 ];
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About Aqua City — Our Story, Mission & Team" },
-      { name: "description", content: "Learn about Aqua City Water Filters — 15+ years engineering premium filtration systems for homes, businesses and industries." },
+      {
+        name: "description",
+        content:
+          "Learn about Aqua City Water Filters — 15+ years engineering premium filtration systems for homes, businesses and industries.",
+      },
       { property: "og:title", content: "About Aqua City Water Filters" },
-      { property: "og:description", content: "Our mission, values and the team behind every install." },
+      {
+        property: "og:description",
+        content: "Our mission, values and the team behind every install.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -49,7 +66,7 @@ function About() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden -mt-20 pt-20 grad-brand text-white">
+      <section className="relative overflow-hidden -mt-[117px] pt-[117px] sm:-mt-[126px] sm:pt-[126px] lg:-mt-[134px] lg:pt-[134px] grad-brand text-white">
         <div className="absolute inset-0 opacity-20">
           <img
             src="https://images.unsplash.com/photo-1439405326854-014607f694d7?w=1600&q=80"
@@ -113,8 +130,8 @@ function About() {
             <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
               <p>
                 Aqua City was founded in 2008 with a simple idea: no household or business should
-                worry about the safety of its water. We started with a single under-sink system
-                and a promise to over-engineer everything we build.
+                worry about the safety of its water. We started with a single under-sink system and
+                a promise to over-engineer everything we build.
               </p>
               <p>
                 Today, our team designs, installs and maintains water treatment systems across 40+
@@ -192,9 +209,7 @@ function About() {
                   transition={{ duration: 0.4, delay: i * 0.08 }}
                 >
                   <div className="text-4xl sm:text-5xl font-bold">{s.v}</div>
-                  <div className="mt-2 text-xs uppercase tracking-[0.2em] text-white/70">
-                    {s.l}
-                  </div>
+                  <div className="mt-2 text-xs uppercase tracking-[0.2em] text-white/70">{s.l}</div>
                 </motion.div>
               ))}
             </div>
@@ -246,8 +261,12 @@ function About() {
               Get a personalized recommendation from a certified Aqua City engineer.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Link to="/contact" className="btn-primary">Contact Us</Link>
-              <Link to="/products" className="btn-outline">View Products</Link>
+              <Link to="/contact" className="btn-primary">
+                Contact Us
+              </Link>
+              <Link to="/products" className="btn-outline">
+                View Products
+              </Link>
             </div>
           </div>
         </div>

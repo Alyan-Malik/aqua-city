@@ -19,7 +19,15 @@ export const useProducts = () => {
       toast.success('Product created successfully');
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to create product');
+      const message = error.response?.data?.message || 'Failed to create product';
+      // Show validation errors if they exist
+      if (error.response?.data?.errors) {
+        const errors = error.response.data.errors;
+        const firstError = Object.values(errors)[0];
+        toast.error(Array.isArray(firstError) ? firstError[0] : String(firstError));
+      } else {
+        toast.error(message);
+      }
     },
   });
 
@@ -31,7 +39,14 @@ export const useProducts = () => {
       toast.success('Product updated successfully');
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to update product');
+      const message = error.response?.data?.message || 'Failed to update product';
+      if (error.response?.data?.errors) {
+        const errors = error.response.data.errors;
+        const firstError = Object.values(errors)[0];
+        toast.error(Array.isArray(firstError) ? firstError[0] : String(firstError));
+      } else {
+        toast.error(message);
+      }
     },
   });
 
@@ -50,9 +65,9 @@ export const useProducts = () => {
     products: data?.data?.data || [],
     isLoading,
     error,
-    createProduct: createMutation.mutate,
+    createProduct: createMutation.mutateAsync,
     isCreating: createMutation.isPending,
-    updateProduct: updateMutation.mutate,
+    updateProduct: updateMutation.mutateAsync,
     isUpdating: updateMutation.isPending,
     deleteProduct: deleteMutation.mutate,
     isDeleting: deleteMutation.isPending,
@@ -68,14 +83,64 @@ export const useProduct = (id: number) => {
 };
 
 export const useCategories = () => {
+  const queryClient = useQueryClient();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ['categories'],
-    queryFn: productApi.getCategories,
+    queryFn: () => productApi.getCategories(),
+  });
+
+  const createMutation = useMutation({
+    mutationFn: (data: any) =>
+      (productApi as typeof productApi & {
+        createCategory: (data: any) => Promise<any>;
+      }).createCategory(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      toast.success('Category created successfully');
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || 'Failed to create category');
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: any }) =>
+      (productApi as typeof productApi & {
+        updateCategory: (id: number, data: any) => Promise<any>;
+      }).updateCategory(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      toast.success('Category updated successfully');
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || 'Failed to update category');
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) =>
+      (productApi as typeof productApi & {
+        deleteCategory: (id: number) => Promise<any>;
+      }).deleteCategory(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      toast.success('Category deleted successfully');
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || 'Failed to delete category');
+    },
   });
 
   return {
     categories: data?.data?.data || [],
     isLoading,
     error,
+    createCategory: createMutation.mutateAsync,
+    isCreating: createMutation.isPending,
+    updateCategory: updateMutation.mutateAsync,
+    isUpdating: updateMutation.isPending,
+    deleteCategory: deleteMutation.mutate,
+    isDeleting: deleteMutation.isPending,
   };
 };

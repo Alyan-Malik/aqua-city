@@ -27,7 +27,9 @@ function NotFoundComponent() {
           The page you're looking for doesn't exist or has been moved.
         </p>
         <div className="mt-6">
-          <Link to="/" className="btn-primary">Go home</Link>
+          <Link to="/" className="btn-primary">
+            Go home
+          </Link>
         </div>
       </div>
     </div>
@@ -58,7 +60,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           >
             Try again
           </button>
-          <a href="/" className="btn-outline">Go home</a>
+          <a href="/" className="btn-outline">
+            Go home
+          </a>
         </div>
       </div>
     </div>
@@ -85,17 +89,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
   }),
   beforeLoad: async () => {
-    if (typeof window !== 'undefined') {
-      const isAdminRoute = window.location.pathname.startsWith('/admin');
-      const isLoginRoute = window.location.pathname === '/login';
-      const token = localStorage.getItem('admin_token');
-      
+    if (typeof window !== "undefined") {
+      const isAdminRoute = window.location.pathname.startsWith("/admin");
+      const isLoginRoute = window.location.pathname === "/login";
+      const token = localStorage.getItem("admin_token");
+
       if (isAdminRoute && !token) {
-        throw redirect({ to: '/login' });
+        throw redirect({ to: "/login" });
       }
-      
+
       if (token && isLoginRoute) {
-        throw redirect({ to: '/admin/dashboard' });
+        throw redirect({ to: "/admin/dashboard" });
       }
     }
   },
@@ -121,11 +125,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  
+
   // Check if we're on an admin route
-  const isAdminRoute = typeof window !== 'undefined' && 
-    (window.location.pathname.startsWith('/admin') || 
-     window.location.pathname === '/login');
+  const isAdminRoute =
+    typeof window !== "undefined" &&
+    (window.location.pathname.startsWith("/admin") || window.location.pathname === "/login");
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -139,7 +143,7 @@ function RootComponent() {
         // Public routes - WITH Navbar/Footer
         <div className="flex min-h-screen flex-col bg-background">
           <Navbar />
-          <main className="flex-1 pt-20">
+          <main className="flex-1 pt-[117px] sm:pt-[126px] lg:pt-[134px]">
             <Outlet />
           </main>
           <Footer />
