@@ -1295,7 +1295,7 @@ var relatedProducts = (id, category, n = 3) => PRODUCTS.filter((p) => p.id !== i
 //#endregion
 //#region src/routes/products.$id.tsx
 var $$splitNotFoundComponentImporter = () => import("./products._id-Dn7nZpCD.js");
-var $$splitComponentImporter = () => import("./products._id-CMjMRshX.js");
+var $$splitComponentImporter = () => import("./products._id-DJ6TBYTI.js");
 var Route = createFileRoute("/products/$id")({
 	loader: async ({ params, context }) => {
 		const { queryClient } = context;

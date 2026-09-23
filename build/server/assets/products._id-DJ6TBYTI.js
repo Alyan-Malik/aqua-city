@@ -1,5 +1,5 @@
 import { n as useProducts } from "./useProducts-C_iE3Zyf.js";
-import { r as relatedProducts, t as Route } from "./products._id-wwbtBYDB.js";
+import { r as relatedProducts, t as Route } from "./products._id-VlAnPkJt.js";
 import { t as ProductCard } from "./ProductCard-DDo0uHzT.js";
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
@@ -50,7 +50,7 @@ function ProductDetail() {
 		"Low maintenance with long cartridge life"
 	];
 	const buildWhatsAppOrderLink = () => {
-		const phoneNumber = "923005254953";
+		const phoneNumber = "923340503503";
 		const productName = product.name;
 		const modelNo = product.model || product.model_no || "N/A";
 		const price = product.price ? `Rs ${Number(product.price).toFixed(2)}` : "Price on request";
@@ -377,7 +377,7 @@ I would like to order the following product:
 							className: "btn-primary bg-white !text-brand hover:!bg-white/90",
 							children: "Get Free Consultation"
 						}), /* @__PURE__ */ jsxs("a", {
-							href: "tel:+18001234567",
+							href: "tel:03340503503",
 							className: "btn-ghost-light",
 							children: [/* @__PURE__ */ jsx(FiPhone, {}), " Call Now"]
 						})]

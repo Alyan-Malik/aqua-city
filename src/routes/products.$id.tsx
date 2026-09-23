@@ -152,7 +152,7 @@ function ProductDetail() {
 
   // Build WhatsApp order link with product info
   const buildWhatsAppOrderLink = () => {
-    const phoneNumber = "923005254953"; // WhatsApp number without +
+    const phoneNumber = "923340503503"; // WhatsApp number without +
     const productName = product.name;
     const modelNo = product.model || product.model_no || "N/A";
     const price = product.price ? `Rs ${Number(product.price).toFixed(2)}` : "Price on request";
@@ -474,7 +474,7 @@ function ProductDetail() {
               <Link to="/contact" className="btn-primary bg-white !text-brand hover:!bg-white/90">
                 Get Free Consultation
               </Link>
-              <a href="tel:+18001234567" className="btn-ghost-light">
+              <a href="tel:03340503503" className="btn-ghost-light">
                 <FiPhone /> Call Now
               </a>
             </div>

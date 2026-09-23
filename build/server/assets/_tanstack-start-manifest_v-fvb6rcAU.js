@@ -13,7 +13,7 @@ var tsrStartManifest = () => ({ routes: {
 			"/products/"
 		],
 		preloads: [
-			"/assets/index-CqxpsKGa.js",
+			"/assets/index-DqYp5GEd.js",
 			"/assets/jsx-runtime-CdArH33I.js",
 			"/assets/react-dom-DCkATU3X.js",
 			"/assets/link-CwUz744a.js",
@@ -25,22 +25,22 @@ var tsrStartManifest = () => ({ routes: {
 		scripts: [{ attrs: {
 			type: "module",
 			async: !0,
-			src: "/assets/index-CqxpsKGa.js"
+			src: "/assets/index-DqYp5GEd.js"
 		} }]
 	},
 	"/": {
 		filePath: "D:/React/aqua-city/src/routes/index.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/routes-T_uRbF_G.js",
-			"/assets/FeatureCard-DiCskmRM.js",
-			"/assets/ProductCard-BCaBNj6A.js"
+			"/assets/routes-JCAgE1ke.js",
+			"/assets/FeatureCard-DcQhxpe1.js",
+			"/assets/ProductCard-C6uyC0kG.js"
 		]
 	},
 	"/about": {
 		filePath: "D:/React/aqua-city/src/routes/about.tsx",
 		children: void 0,
-		preloads: ["/assets/about-CfmUbXTZ.js", "/assets/FeatureCard-DiCskmRM.js"]
+		preloads: ["/assets/about-BLUTEAwf.js", "/assets/FeatureCard-DcQhxpe1.js"]
 	},
 	"/admin": {
 		filePath: "D:/React/aqua-city/src/routes/admin.tsx",
@@ -51,54 +51,54 @@ var tsrStartManifest = () => ({ routes: {
 			"/admin/profile"
 		],
 		preloads: [
-			"/assets/admin-C0Zy7XXi.js",
+			"/assets/admin-CJenuNnP.js",
 			"/assets/authStore-D1NAZjFF.js",
-			"/assets/useAuth-DDw3qDtB.js"
+			"/assets/useAuth-iwk7V7AZ.js"
 		]
 	},
 	"/contact": {
 		filePath: "D:/React/aqua-city/src/routes/contact.tsx",
 		children: void 0,
-		preloads: ["/assets/contact-D35Apshu.js"]
+		preloads: ["/assets/contact-DANTiPXU.js"]
 	},
 	"/login": {
 		filePath: "D:/React/aqua-city/src/routes/login.tsx",
 		children: void 0,
-		preloads: ["/assets/login-Dy2HcEsy.js", "/assets/useAuth-DDw3qDtB.js"]
+		preloads: ["/assets/login-Cj6OOJUX.js", "/assets/useAuth-iwk7V7AZ.js"]
 	},
 	"/admin/categories": {
 		filePath: "D:/React/aqua-city/src/routes/admin.categories.tsx",
 		children: void 0,
-		preloads: ["/assets/admin.categories-B2PDEMjl.js", "/assets/useCategories-QEn6hFCI.js"]
+		preloads: ["/assets/admin.categories-D9pz9KLY.js", "/assets/useCategories-ag5WTObK.js"]
 	},
 	"/admin/dashboard": {
 		filePath: "D:/React/aqua-city/src/routes/admin.dashboard.tsx",
 		children: void 0,
-		preloads: ["/assets/admin.dashboard-Ah0s-bLl.js", "/assets/useCategories-QEn6hFCI.js"]
+		preloads: ["/assets/admin.dashboard-DA6PR-T2.js", "/assets/useCategories-ag5WTObK.js"]
 	},
 	"/admin/products": {
 		filePath: "D:/React/aqua-city/src/routes/admin.products.tsx",
 		children: void 0,
-		preloads: ["/assets/admin.products-BVmpkuq7.js", "/assets/useCategories-QEn6hFCI.js"]
+		preloads: ["/assets/admin.products-CGO6QjhP.js", "/assets/useCategories-ag5WTObK.js"]
 	},
 	"/admin/profile": {
 		filePath: "D:/React/aqua-city/src/routes/admin.profile.tsx",
 		children: void 0,
-		preloads: ["/assets/admin.profile-DqTl11hq.js"]
+		preloads: ["/assets/admin.profile-LrHtuiS8.js"]
 	},
 	"/products/$id": {
 		filePath: "D:/React/aqua-city/src/routes/products.$id.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/products._id-6hdkbK0A.js",
-			"/assets/ProductCard-BCaBNj6A.js",
+			"/assets/products._id-B_-U6Ow2.js",
+			"/assets/ProductCard-C6uyC0kG.js",
 			"/assets/products._id-BvKDbAih.js"
 		]
 	},
 	"/products/": {
 		filePath: "D:/React/aqua-city/src/routes/products.index.tsx",
 		children: void 0,
-		preloads: ["/assets/products.index-D-27yuk3.js", "/assets/ProductCard-BCaBNj6A.js"]
+		preloads: ["/assets/products.index-DTm3tVTK.js", "/assets/ProductCard-C6uyC0kG.js"]
 	}
 } });
 //#endregion

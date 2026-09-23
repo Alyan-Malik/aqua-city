@@ -1,5 +1,5 @@
 import { t as useCategories } from "./useProducts-C_iE3Zyf.js";
-import { n as PRODUCTS, t as Route$11 } from "./products._id-wwbtBYDB.js";
+import { n as PRODUCTS, t as Route$11 } from "./products._id-VlAnPkJt.js";
 import { t as Route$12 } from "./products.index-CCn2bpIE.js";
 import { useEffect, useState } from "react";
 import { HeadContent, Link, Outlet, Scripts, createFileRoute, createRootRouteWithContext, createRouter, lazyRouteComponent, redirect, useRouter } from "@tanstack/react-router";
